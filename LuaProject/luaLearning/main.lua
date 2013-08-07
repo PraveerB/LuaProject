@@ -21,35 +21,55 @@ local image = display.newImage( "assets/bg.jpg", 320*480)
 local storyboard = require "storyboard"
 local widget = require "widget"
 --local views = require "views."
-
+local scrollView
 --
 local function onSceneTouch( self,event )
-	if event.phase == "began" then
-		print(self.id)
-		storyboard.gotoScene( "views."..self.id, "crossFade", 800  )
-		
-		return true
-	end
+        print("Phase :: "..event.phase)
+        if event.phase == "began" then
+            display.getCurrentStage():setFocus(self)
+            self.isFocus = true
+            return true
+        elseif event.phase == "moved" then
+            display.getCurrentStage():setFocus(self)
+            self.isFocus = true
+            return true
+        elseif event.phase == "ended" then
+            print(self.id)
+            storyboard.gotoScene( "views."..self.id, "crossFade", 800  )
+            display.getCurrentStage():setFocus(event.target)
+            return true
+        end
 end
 
 function loadResources(screenGroup,a,isLastLevel)
 	local vary
 	local i=0
 	if isLastLevel==false then
-		for key,value in pairs(a) do
-			i = i+1
-			vary = display.newImage("assets/"..value, 250*(i-1), 200, native.systemFontBold, 24 )
-			vary:setStrokeColor(0,0,0)
-			vary.strokeWidth= 15
-			vary.id = "scene"..(i+1)
-			screenGroup:insert(vary)
-			vary.touch = onSceneTouch
-			vary:addEventListener( "touch", vary)
-	    	print( key, value )
-		end
-	
+                scrollView = widget.newScrollView {
+                top = 200,
+                left = 0,
+                width = 2000,
+                height = 250,
+                scrollWidth = 1005,
+                scrollHeight = 0,
+                verticalScrollDisabled=true,
+                hideScrollBar = false,
+                listener = scrollListener
+            }
+            
+            for key,value in pairs(a) do
+                i = i+1
+                vary = display.newImage("assets/"..value, 250*(i-1), 0, native.systemFontBold, 24 )
+                vary:setStrokeColor(0,0,0)
+                vary.strokeWidth= 15
+                vary.id = "scene"..(i+1)
+                screenGroup:insert(vary)
+                vary.touch = onSceneTouch
+                vary:addEventListener( "touch", vary)
+                scrollView:insert(vary)
+            end
 	else
-	--to do
+            --to do
 	end
 	return vary
 end
