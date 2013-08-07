@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------
 --
--- scene1.lua
+-- scene1213.lua
 --
 ---------------------------------------------------------------------------------
 
@@ -12,8 +12,7 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 local a = { skin = "edw.jpg",
             body = "vivel-logo-big.jpg",
-            hand = "edw.jpg", 
-            face = "vivel-logo-big.jpg"
+            hand = "edw.jpg"
       }
 local vary
 -- print(table.getn(a)) 
@@ -24,14 +23,14 @@ local vary
 function scene:createScene( event )
 	local screenGroup = self.view
 	vary = loadResources(screenGroup,a,false)
-	print( "\n1: createScene event")
+	print( "\n1213: createScene event")
 end
 
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
 	
-	print( "1: enterScene event" )
+	print( "1213: enterScene event" )
 	
 	-- remove previous scene's view
 	local prior_scene = storyboard.getPrevious()
@@ -43,14 +42,14 @@ end
 -- Called when scene is about to move offscreen:
 function scene:exitScene( event )
 	
-	print( "1: exitScene event" )
+	print( "1213: exitScene event" )
 		vary:removeEventListener( "touch", vary)
 	
 end
 
 -- Called prior to the removal of scene's "view" (display group)
 function scene:destroyScene( event )
-	print( "((destroying scene 1's view))" )
+	print( "((destroying scene 1213's view))" )
 end
 
 ---------------------------------------------------------------------------------

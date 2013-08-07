@@ -21,24 +21,29 @@ local image = display.newImage( "assets/bg.jpg", 320*480)
 local storyboard = require "storyboard"
 local widget = require "widget"
 --local views = require "views."
-local scrollView
+
+-- initialize global empty table
+
+local navigator = {name="gaurav" }
 --
-local function onSceneTouch( self,event )
+local function onSceneTouch( event )
         print("Phase :: "..event.phase)
         if event.phase == "began" then
-            display.getCurrentStage():setFocus(self)
-            self.isFocus = true
-            return true
-        elseif event.phase == "moved" then
-            display.getCurrentStage():setFocus(self)
-            self.isFocus = true
-            return true
-        elseif event.phase == "ended" then
-            print(self.id)
-            storyboard.gotoScene( "views."..self.id, "crossFade", 800  )
-            display.getCurrentStage():setFocus(event.target)
+            print (event.target.id)
+            
+            
+		--Upadate global table ..
+			--Key : get the link name eg. Skin, Bath.
+			--Value: "views."..self.id
+			
+		
+		
+		
+		
+            storyboard.gotoScene( "views."..event.target.id, "crossFade", 800  )
             return true
         end
+        return true
 end
 
 function loadResources(screenGroup,a,isLastLevel)
@@ -54,7 +59,7 @@ function loadResources(screenGroup,a,isLastLevel)
                 scrollHeight = 0,
                 verticalScrollDisabled=true,
                 hideScrollBar = false,
-                listener = scrollListener
+                listener = onSceneTouch
             }
             
             for key,value in pairs(a) do
@@ -63,9 +68,12 @@ function loadResources(screenGroup,a,isLastLevel)
                 vary:setStrokeColor(0,0,0)
                 vary.strokeWidth= 15
                 vary.id = "scene"..(i+1)
+			
+			-- set link name print(key).
+			
                 screenGroup:insert(vary)
-                vary.touch = onSceneTouch
-                vary:addEventListener( "touch", vary)
+                --vary.touch = onSceneTouch
+                vary:addEventListener( "touch", onSceneTouch)
                 scrollView:insert(vary)
             end
 	else
@@ -74,7 +82,7 @@ function loadResources(screenGroup,a,isLastLevel)
 	return vary
 end
 --on touch of home page image
-local function onHomeTouch( self, event )
+local function onHomeTouch( event )
 	if event.phase == "began" then
 		storyboard.gotoScene( "views.scene1", "slideRight", 500  )
 		return true
@@ -84,9 +92,9 @@ end
 
 -- Create a home page image
 homeImage  = display.newImage( "assets/Icon-ldpi.png",0,0 )
-homeImage.touch = onHomeTouch
+--homeImage.touch = onHomeTouch
 --
-homeImage:addEventListener( "touch", homeImage )
+homeImage:addEventListener( "touch", onHomeTouch)
 
 -- load first scene
-storyboard.gotoScene( "views.scene1", "fade", 400 )
+storyboard.gotoScene( "views.homeScreen", "fade", 400 )
