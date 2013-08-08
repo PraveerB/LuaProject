@@ -25,22 +25,17 @@ local widget = require "widget"
 -- initialize global empty table
 
 local navigator = {name="gaurav" }
+pageId = "" ;
 --
 local function onSceneTouch( event )
-        print("Phase :: "..event.phase)
+        pageId = pageId..event.target.id
+        print("views.scene"..pageId)
         if event.phase == "began" then
-            print (event.target.id)
-            
-            
-		--Upadate global table ..
-			--Key : get the link name eg. Skin, Bath.
-			--Value: "views."..self.id
-			
-		
-		
-		
-		
-            storyboard.gotoScene( "views."..event.target.id, "crossFade", 800  )
+            --print (event.target.id)
+            --Upadate global table ..
+                    --Key : get the link name eg. Skin, Bath.
+                    --Value: "views."..self.id
+            storyboard.gotoScene( "views.scene"..pageId, "crossFade", 800  )
             return true
         end
         return true
@@ -49,28 +44,29 @@ end
 function loadResources(screenGroup,a,isLastLevel)
 	local vary
 	local i=0
+        
 	if isLastLevel==false then
-                scrollView = widget.newScrollView {
+                local scrollView = widget.newScrollView {
                 top = 200,
                 left = 0,
-                width = 2000,
+                width = 1024,
                 height = 250,
                 scrollWidth = 1005,
                 scrollHeight = 0,
                 verticalScrollDisabled=true,
-                hideScrollBar = false,
-                listener = onSceneTouch
+                hideScrollBar = false
+                
             }
             
             for key,value in pairs(a) do
                 i = i+1
+                --pageId = pageId..i
+                --print ("pageId :: "..pageId)
                 vary = display.newImage("assets/"..value, 250*(i-1), 0, native.systemFontBold, 24 )
-                vary:setStrokeColor(0,0,0)
+                vary:setStrokeColor(254,254,254)
                 vary.strokeWidth= 15
-                vary.id = "scene"..(i+1)
-			
-			-- set link name print(key).
-			
+                vary.id = i	
+		-- set link name print(key).
                 screenGroup:insert(vary)
                 --vary.touch = onSceneTouch
                 vary:addEventListener( "touch", onSceneTouch)

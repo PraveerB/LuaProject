@@ -11,10 +11,10 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 local a = { skin = "edw.jpg",
-			body = "vivel-logo-big.jpg",
-			hand = "edw.jpg", 
-			face = "vivel-logo-big.jpg",
-			scalp = "edw.jpg"
+            body = "vivel-logo-big.jpg",
+            hand = "edw.jpg", 
+            face = "vivel-logo-big.jpg",
+            scalp = "edw.jpg"
 		  }
 local vary
  print(table.getn(a)) 
