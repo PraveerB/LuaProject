@@ -10,8 +10,8 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
-local a = { skin = "edw.jpg",
-            body = "vivel-logo-big.jpg"
+local a = { skin1 = "edw.jpg",
+            body1 = "vivel-logo-big.jpg"
             
       }
 local vary
@@ -23,7 +23,7 @@ local vary
 function scene:createScene( event )
 	local screenGroup = self.view
 	vary = loadResources(screenGroup,a,false)
-	print( "\n1: createScene event")
+	--print( "\n1: createScene event")
 end
 
 

@@ -30,9 +30,7 @@ end
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
-	
 	print( "HS: enterScene event" )
-	
 	-- remove previous scene's view
 	local prior_scene = storyboard.getPrevious()
 	storyboard.purgeScene( prior_scene )
@@ -42,7 +40,6 @@ end
 
 -- Called when scene is about to move offscreen:
 function scene:exitScene( event )
-	
 	print( "HS: exitScene event" )
 		vary:removeEventListener( "touch", vary)
 	

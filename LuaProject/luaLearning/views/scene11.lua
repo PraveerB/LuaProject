@@ -10,12 +10,12 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
-local a = { hair = "vivel-logo-big.jpg",
-			scalp = "vivel-logo-big.jpg",
-			mouth = "vivel-logo-big.jpg", 
+local a = { hair11 = "vivel-logo-big.jpg",
+            scalp11 = "vivel-logo-big.jpg",
+            mouth11 = "vivel-logo-big.jpg", 
 		  }
 local vary
- print(table.getn(a)) 
+print(table.getn(a)) 
 
 -- Touch event listener for background image
 

@@ -1,14 +1,3 @@
---
--- Abstract: Storyboard Sample
---
--- Version: 1.0
--- 
--- Sample code is MIT licensed, see http://www.coronalabs.com/links/code/license
--- Copyright (C) 2011 Corona Labs Inc. All Rights Reserved.
---
--- Demonstrates use of the Storyboard API (scene events, transitioning, etc.)
---
-
 -- hide device status bar
 display.setStatusBar( display.HiddenStatusBar )
 --native.setActivityIndicator( false )
@@ -24,17 +13,17 @@ local widget = require "widget"
 
 -- initialize global empty table
 
-local navigator = {name="gaurav" }
+navigator = nil
 pageId = "" ;
+--navSequence =0;
 --
 local function onSceneTouch( event )
         pageId = pageId..event.target.id
+        homeImage.isVisible = true
         print("views.scene"..pageId)
         if event.phase == "began" then
-            --print (event.target.id)
-            --Upadate global table ..
-                    --Key : get the link name eg. Skin, Bath.
-                    --Value: "views."..self.id
+            --navSequence =navSequence +1
+            navigator[event.target.linkName] = "views.scene"..pageId
             storyboard.gotoScene( "views.scene"..pageId, "crossFade", 800  )
             return true
         end
@@ -44,6 +33,7 @@ end
 function loadResources(screenGroup,a,isLastLevel)
 	local vary
 	local i=0
+         --print("navigator ::"..navigator)
         
 	if isLastLevel==false then
                 local scrollView = widget.newScrollView {
@@ -65,7 +55,8 @@ function loadResources(screenGroup,a,isLastLevel)
                 vary = display.newImage("assets/"..value, 250*(i-1), 0, native.systemFontBold, 24 )
                 vary:setStrokeColor(254,254,254)
                 vary.strokeWidth= 15
-                vary.id = i	
+                vary.id = i
+                vary.linkName = key
 		-- set link name print(key).
                 screenGroup:insert(vary)
                 --vary.touch = onSceneTouch
@@ -75,19 +66,35 @@ function loadResources(screenGroup,a,isLastLevel)
 	else
             --to do
 	end
+        createNavigator()
 	return vary
 end
+
+-- Creates the navigation bar
+function createNavigator()
+    if navigator ~= nil then
+        for key,value in pairs(navigator) do
+            print(key .."  =  ".. value)
+            -- Create the navigation Bar with the key and value
+            --display.newGroup()
+            
+        end
+    end
+end
+
 --on touch of home page image
 local function onHomeTouch( event )
 	if event.phase == "began" then
-		storyboard.gotoScene( "views.scene1", "slideRight", 500  )
-		return true
+            homeImage.isVisible = false
+            storyboard.gotoScene( "views.homeScreen", "slideRight", 500  )
+            return true
 	end
 end
 --
 
 -- Create a home page image
 homeImage  = display.newImage( "assets/Icon-ldpi.png",0,0 )
+homeImage.isVisible = false
 --homeImage.touch = onHomeTouch
 --
 homeImage:addEventListener( "touch", onHomeTouch)
