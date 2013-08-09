@@ -10,9 +10,11 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
-local a = { skin = "edw.jpg",
-            body = "vivel-logo-big.jpg",
-            hand = "edw.jpg"
+local a = { 
+			{ src = "edw.jpg", linkName = "Skin Care" },
+            { src = "vivel-logo-big.jpg", linkName = "Hair Care" },
+            { src = "edw.jpg", linkName = "Bath Care" },
+            { src = "vivel-logo-big.jpg", linkName = "Fragrance" }
             
       }
 local vary
