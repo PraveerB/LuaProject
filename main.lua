@@ -16,17 +16,32 @@ local widget = require "widget"
 navigator = {}
 pageId = "" ;
 local e = 1
-local group = display.newGroup()
 --navSequence =0;
 --
+local nav 
+local function onNavTouch ( event )
+	storyboard.gotoScene( navigator[event.target.id], "crossFade", 400  )
+	if event.target.wid < e then
+		for i=event.target.wid,e do
+			display.newText("",i,0,"Helvetica",40)
+		end
+	end
+return true
+end
+
 local function onSceneTouch( event )
         pageId = pageId..event.target.id
+        nav = display.newText(event.target.linkName..">",55+e,0,"Helvetica",40)
+            e = e + nav.width
+            nav.wid = e
+            nav.id = event.target.linkName
+        nav:addEventListener( "touch", onNavTouch)
         homeImage.isVisible = true
         print("views.scene"..pageId)
         if event.phase == "began" then
             --navSequence =navSequence +1
             navigator[event.target.linkName] = "views.scene"..pageId
-            storyboard.gotoScene( "views.scene"..pageId, "crossFade", 800  )
+            storyboard.gotoScene( "views.scene"..pageId, "crossFade", 400  )
             return true
         end
         return true
@@ -65,16 +80,17 @@ function loadResources(screenGroup,a,isLastLevel)
 	else
             --to do
 	end
-        createNavigator()
+        --createNavigator()
        
 	return vary
 end
 
 -- Creates the navigation bar
-function createNavigator()
+--[[function createNavigator()
+local nav = nil
     if navigator ~= nil then
         for key,value in pairs(navigator) do
-        local nav = display.newText(""..key,50+e,0,"Helvetica",40)
+        nav = display.newText(""..key,50+e,0,"Helvetica",40)
          e = nav.width
         local arrow = display.newText (">",e+20,0,"Helvetica",50)
         nav:setTextColor(0,0,0)
@@ -84,8 +100,7 @@ function createNavigator()
             group:insert(nav)
         end
     end
-     group:remove(nav)
-end
+end ]]
 
 --on touch of home page image
 local function onHomeTouch( event )
