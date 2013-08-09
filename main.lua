@@ -48,8 +48,7 @@ function loadResources(screenGroup,a,isLastLevel)
                 
             }
             
-            for i=1,#a  do
-            	print (#a)
+            for i=1,#a do
                 vary = display.newImage("assets/"..a[i].src, 250*(i-1), 0, native.systemFontBold, 24 )
                 vary:setStrokeColor(254,254,254)
                 vary.strokeWidth= 15
@@ -71,8 +70,8 @@ end
 -- Creates the navigation bar
 function createNavigator()
     if navigator ~= nil then
-    local nav = display.newText(""..navigator['Skin Care'],0,0,"Helvetica",24)
         for key,value in pairs(navigator) do
+        local nav = display.newText(""..key,0,0,"Helvetica",24)
             print(key .."  =  ".. value)
             -- Create the navigation Bar with the key and value
             --display.newGroup()
