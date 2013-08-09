@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------
 --
--- scene1.lua
+-- scene1131.lua
 --
 ---------------------------------------------------------------------------------
 
@@ -10,13 +10,15 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
-local a = { skin = "edw.jpg",
-            body = "vivel-logo-big.jpg",
-            hand = "edw.jpg", 
-            face = "vivel-logo-big.jpg" ,
-            skin2 = "edw.jpg",
-            skin3 = "edw.jpg"
+local a = { 
+			{ src = "edw.jpg", linkName = "Fiama Di Wills Men Regenerating Anti Ageing Moisteurizer" },
+            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Men  After shave lotion" },
+            { src = "edw.jpg", linkName = "Fiama Di Wills Men  Revitalizing Anti-Fatigue Under Eye Gel" },
+            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Men De-stressing and Brightening face wash" },
+            { src = "edw.jpg", linkName = "Fiama Di Wills Men Detoxifying Anti-pollution face wash" },
+            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Men Moisture Guard  Instant Foaming Face wash" }
       }
+      
 local vary
 -- print(table.getn(a)) 
 
@@ -46,7 +48,7 @@ end
 function scene:exitScene( event )
 	
 	print( "1133: exitScene event" )
-		vary:removeEventListener( "touch", vary)
+		--vary:removeEventListener( "touch", vary)
 	
 end
 

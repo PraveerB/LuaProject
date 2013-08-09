@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------
 --
--- scene1.lua
+-- scene1112.lua
 --
 ---------------------------------------------------------------------------------
 
@@ -10,13 +10,12 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
-local a = { skin = "edw.jpg",
-            body = "vivel-logo-big.jpg",
-            hand = "edw.jpg", 
-            face = "vivel-logo-big.jpg" ,
-            skin2 = "edw.jpg",
-            skin3 = "edw.jpg"
+local a = { 
+			{ src = "edw.jpg", linkName = "Essenza di Wills Inizio Femme body lotion" },
+            { src = "vivel-logo-big.jpg", linkName = "Vivel Cell Renew All Year Light Body Lotion" },
+            { src = "edw.jpg", linkName = "Vivel Cell Renew Body Lotion" },
       }
+
 local vary
 -- print(table.getn(a)) 
 
@@ -46,7 +45,7 @@ end
 function scene:exitScene( event )
 	
 	print( "1112: exitScene event" )
-		vary:removeEventListener( "touch", vary)
+		--vary:removeEventListener( "touch", vary)
 	
 end
 

@@ -15,6 +15,8 @@ local widget = require "widget"
 
 navigator = {}
 pageId = "" ;
+local e = 1
+local group = display.newGroup()
 --navSequence =0;
 --
 local function onSceneTouch( event )
@@ -64,6 +66,7 @@ function loadResources(screenGroup,a,isLastLevel)
             --to do
 	end
         createNavigator()
+       
 	return vary
 end
 
@@ -71,17 +74,22 @@ end
 function createNavigator()
     if navigator ~= nil then
         for key,value in pairs(navigator) do
-        local nav = display.newText(""..key,0,0,"Helvetica",24)
+        local nav = display.newText(""..key,50+e,0,"Helvetica",40)
+         e = nav.width
+        local arrow = display.newText (">",e+20,0,"Helvetica",50)
+        nav:setTextColor(0,0,0)
+        arrow:setTextColor(0,0,255)
             print(key .."  =  ".. value)
             -- Create the navigation Bar with the key and value
-            --display.newGroup()
-            
+            group:insert(nav)
         end
     end
+     group:remove(nav)
 end
 
 --on touch of home page image
 local function onHomeTouch( event )
+print(event.phase)
 	if event.phase == "began" then
             homeImage.isVisible = false
             storyboard.gotoScene( "views.homeScreen", "slideRight", 500  )

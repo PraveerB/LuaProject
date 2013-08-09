@@ -10,10 +10,14 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
-local a = { skin1 = "edw.jpg",
-            body1 = "vivel-logo-big.jpg"
-            
-      }
+local a = { 
+			{ src = "edw.jpg", linkName = "Products" },
+            { src = "vivel-logo-big.jpg", linkName = "Consultation" },
+            { src = "edw.jpg", linkName = "Communication" },
+            { src = "vivel-logo-big.jpg", linkName = "Product Literature" },
+            { src = "vivel-logo-big.jpg", linkName = "Expert Speak" }
+
+           }
 local vary
 -- print(table.getn(a)) 
 
@@ -43,7 +47,7 @@ end
 function scene:exitScene( event )
 	
 	print( "1: exitScene event" )
-		vary:removeEventListener( "touch", vary)
+		--vary:removeEventListener( "touch", vary)
 	
 end
 

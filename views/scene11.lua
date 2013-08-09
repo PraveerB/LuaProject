@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------
 --
--- scene1.lua
+-- scene11.lua
 --
 ---------------------------------------------------------------------------------
 
@@ -10,9 +10,10 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
-local a = { hair11 = "vivel-logo-big.jpg",
-            scalp11 = "vivel-logo-big.jpg",
-            mouth11 = "vivel-logo-big.jpg", 
+local a = { 
+			{ src = "edw.jpg", linkName = "Categories" },
+            { src = "vivel-logo-big.jpg", linkName = "Benefits" },
+            { src = "edw.jpg", linkName = "Brands" }
 		  }
 local vary
 print(table.getn(a)) 
@@ -43,7 +44,7 @@ end
 function scene:exitScene( event )
 	
 	print( "11: exitScene event" )
-		vary:removeEventListener( "touch", vary)
+		--vary:removeEventListener( "touch", vary)
 	
 end
 

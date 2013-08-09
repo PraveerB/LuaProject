@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------
 --
--- scene1.lua
+-- scene1111.lua
 --
 ---------------------------------------------------------------------------------
 
@@ -10,12 +10,21 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
-local a = { skin1111 = "edw.jpg",
-            body1111 = "vivel-logo-big.jpg",
-            hand1111 = "edw.jpg", 
-            face1111 = "vivel-logo-big.jpg" ,
-            skin21111 = "edw.jpg",
-            skin31111 = "edw.jpg"
+local a = { 
+			{ src = "edw.jpg", linkName = "Fiama Di Wills Perfect Young  Repleneshing Multi Benefit Cream" },
+            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Perfect Young Repleneshing Night Skin Infuse" },
+            { src = "edw.jpg", linkName = "Fiama Di Wills Perfect Young Intensive Replenishment Concentrate" },
+            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Perfect Young Mild Cleansing face wash" },			
+            { src = "edw.jpg", linkName = "Fiama Di Wills Men Regenerating Anti Ageing Moisteurizer" },
+            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Men  After shave lotion" },
+            { src = "edw.jpg", linkName = "Fiama Di Wills Men De-stressing and Brightening face wash" },
+            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Men Detoxifying Anti-pollution face wash" },			
+            { src = "edw.jpg", linkName = "Fiama Di Wills Men Moisture Guard  Instant Foaming Face wash" },
+            { src = "vivel-logo-big.jpg", linkName = "Vivel Cell Renew Moisturizer" },
+            { src = "edw.jpg", linkName = "Vivel Cell Renew Pollution Protect face wash" },
+            { src = "vivel-logo-big.jpg", linkName = "Vivel Cell Renew Energizing face wash" },
+            { src = "edw.jpg", linkName = "Vivel Perfect Glow Skin Tone Perfector" }
+
       }
 local vary
 -- print(table.getn(a)) 
@@ -46,7 +55,7 @@ end
 function scene:exitScene( event )
 	
 	print( "1111: exitScene event" )
-		vary:removeEventListener( "touch", vary)
+		--vary:removeEventListener( "touch", vary)
 	
 end
 

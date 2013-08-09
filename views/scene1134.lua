@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------
 --
--- scene1311.lua
+-- scene1134.lua
 --
 ---------------------------------------------------------------------------------
 
@@ -10,10 +10,16 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
-local a = { skin = "edw.jpg",
-            body = "vivel-logo-big.jpg",
-            hand = "edw.jpg"
+local a = { 
+			{ src = "edw.jpg", linkName = "Vivel Cell Renew Moisturizer" },
+            { src = "vivel-logo-big.jpg", linkName = "Vivel Cell Renew hand cream" },
+            { src = "edw.jpg", linkName = "Vivel Cell Renew All Year Light Body Lotion" },
+            { src = "vivel-logo-big.jpg", linkName = "Vivel Cell Renew Body Lotion" },
+            { src = "edw.jpg", linkName = "Vivel Cell Renew Pollution Protect face wash" },
+            { src = "vivel-logo-big.jpg", linkName = "Vivel Cell Renew Energizing face wash" }
+            
       }
+
 local vary
 -- print(table.getn(a)) 
 
@@ -23,15 +29,13 @@ local vary
 function scene:createScene( event )
 	local screenGroup = self.view
 	vary = loadResources(screenGroup,a,false)
-	print( "\n1311: createScene event")
+	print( "\nHS: createScene event")
 end
 
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
-	
-	print( "1311: enterScene event" )
-	
+	print( "HS: enterScene event" )
 	-- remove previous scene's view
 	local prior_scene = storyboard.getPrevious()
 	storyboard.purgeScene( prior_scene )
@@ -41,15 +45,14 @@ end
 
 -- Called when scene is about to move offscreen:
 function scene:exitScene( event )
-	
-	print( "1311: exitScene event" )
-		vary:removeEventListener( "touch", vary)
+	print( "HS: exitScene event" )
+		--vary:removeEventListener( "touch", vary)
 	
 end
 
 -- Called prior to the removal of scene's "view" (display group)
 function scene:destroyScene( event )
-	print( "((destroying scene 1311's view))" )
+	print( "((destroying homeScreen's view))" )
 end
 
 ---------------------------------------------------------------------------------
