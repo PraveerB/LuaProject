@@ -13,7 +13,7 @@ local widget = require "widget"
 
 -- initialize global empty table
 
-navigator = nil
+navigator = {}
 pageId = "" ;
 --navSequence =0;
 --
