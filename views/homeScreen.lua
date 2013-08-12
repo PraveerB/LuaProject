@@ -10,8 +10,7 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
-local a = { 
-			{ src = "edw.jpg", linkName = "Skin Care" },
+local a = { { src = "edw.jpg", linkName = "Skin Care" },
             { src = "vivel-logo-big.jpg", linkName = "Hair Care" },
             { src = "edw.jpg", linkName = "Bath Care" },
             { src = "vivel-logo-big.jpg", linkName = "Fragrance" }
