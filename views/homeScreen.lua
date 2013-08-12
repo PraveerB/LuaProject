@@ -5,6 +5,7 @@
 ---------------------------------------------------------------------------------
 
 local storyboard = require( "storyboard" )
+local widget = require( "widget" )
 local scene = storyboard.newScene()
 
 ---------------------------------------------------------------------------------
@@ -23,8 +24,10 @@ local vary
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
+local screenGroup = self.view
+	local widget = require( "widget" )
 	local screenGroup = self.view
-	vary = loadResources(screenGroup,a,false)
+	vary = loadResources(screenGroup,a,false,widget)
 	print( "\nHS: createScene event")
 end
 

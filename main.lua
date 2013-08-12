@@ -79,8 +79,10 @@ function loadResources(screenGroup,a,isLastLevel)
                 vary:addEventListener( "touch", onSceneTouch)
                 scrollView:insert(vary)
             end
-	else
-            --to do
+	else 
+           local slideView = require("slideView")
+           print("else part")
+           slideView.new(a)
 	end
         createNavigator()
        
