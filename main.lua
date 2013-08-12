@@ -13,20 +13,38 @@ local widget = require "widget"
 
 -- initialize global empty table
 
-navigator = {}
+navigator = {
+		{linkName = "tabBar" , linkSrc = "" , linkId = "", linkObj=""}
+}
 pageId = "" ;
 local e = 1
-local group = display.newGroup()
 --navSequence =0;
 --
+local nav,i 
+local function onNavTouch ( event )
+	storyboard.gotoScene( navigator[event.target.id].linkSrc, "crossFade", 400  )
+	if event.target.id < #navigator+1 then
+	for i=event.target.id,#navigator do
+		navigator[i+1].linkObj:removeSelf()
+		table.remove(navigator,i+1)
+		end
+		print("gaya"..#navigator)
+	end
+return true
+end
+
 local function onSceneTouch( event )
+		i = #navigator
+		i=i+1
         pageId = pageId..event.target.id
         homeImage.isVisible = true
         print("views.scene"..pageId)
         if event.phase == "began" then
             --navSequence =navSequence +1
-            navigator[event.target.linkName] = "views.scene"..pageId
-            storyboard.gotoScene( "views.scene"..pageId, "crossFade", 800  )
+            table.insert(navigator, { linkName = event.target.linkName, linkSrc = "views.scene"..pageId, linkId = i } )
+           -- navigator[i].linkName = event.target.linkName
+           -- navigator[i].linkSrc = "views.scene"..pageId
+            storyboard.gotoScene( "views.scene"..pageId, "crossFade", 400  )
             return true
         end
         return true
@@ -70,21 +88,33 @@ function loadResources(screenGroup,a,isLastLevel)
 	return vary
 end
 
+--[[function createNavigator()
+		 	nav = display.newText(event.target.linkName..">",55+e,0,"Helvetica",40)
+            e = e + nav.width
+            nav.wid = e
+            nav.id = event.target.linkName
+        	nav:addEventListener( "touch", onNavTouch)
+end]]
+
 -- Creates the navigation bar
 function createNavigator()
-    if navigator ~= nil then
-        for key,value in pairs(navigator) do
-        local nav = display.newText(""..key,50+e,0,"Helvetica",40)
-         e = nav.width
-        local arrow = display.newText (">",e+20,0,"Helvetica",50)
-        nav:setTextColor(0,0,0)
-        arrow:setTextColor(0,0,255)
-            print(key .."  =  ".. value)
+--local nav = nil
+local group = display.newGroup()
+    --group:removeSelf()
+    if #navigator > 2 then
+        for i=2,#navigator do
+       nav = display.newText(navigator[i].linkName..">",55+e,0,"Helvetica",40)
+         navigator[i].linkObj = nav
+         e = e + nav.width
+        	nav.wid = e
+        	nav.id = i
+        	group:insert(nav)
+         navigator[i].linkObj:addEventListener( "touch", onNavTouch)
+            --print(key .."  =  ".. value)
             -- Create the navigation Bar with the key and value
-            group:insert(nav)
         end
+        print("hohohoho"..#navigator)
     end
-     group:remove(nav)
 end
 
 --on touch of home page image

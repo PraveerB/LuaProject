@@ -42,7 +42,7 @@ end
 -- Called when scene is about to move offscreen:
 function scene:exitScene( event )
 	print( "HS: exitScene event" )
-		vary:removeEventListener( "touch", vary)
+		--vary:removeEventListener( "touch", vary)
 	
 end
 
