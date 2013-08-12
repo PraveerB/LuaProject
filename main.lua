@@ -16,34 +16,33 @@ local widget = require "widget"
 navigator = {
 		{linkName = "tabBar" , linkSrc = "" , linkId = "", linkObj=""}
 }
-pageId = "" ;
-local e = 1
+pageId = "" 
+local screenGroupHolder = {};
 --navSequence =0;
---
-local nav,i 
+ local group = display.newGroup()
+--local nav,i 
 local function onNavTouch ( event )
 	storyboard.gotoScene( navigator[event.target.id].linkSrc, "crossFade", 400  )
 	if event.target.id < #navigator+1 then
+        print("ID  "..event.target.id .."  Size "..#navigator )
 	for i=event.target.id,#navigator do
-		navigator[i+1].linkObj:removeSelf()
+		print(navigator[i+1].linkObj.text)
 		table.remove(navigator,i+1)
 		end
-		print("gaya"..#navigator)
+		
 	end
 return true
 end
 
 local function onSceneTouch( event )
-		i = #navigator
-		i=i+1
+	i = #navigator
+	i=i+1
         pageId = pageId..event.target.id
         homeImage.isVisible = true
-        print("views.scene"..pageId)
+        --print("views.scene"..pageId)
         if event.phase == "began" then
             --navSequence =navSequence +1
             table.insert(navigator, { linkName = event.target.linkName, linkSrc = "views.scene"..pageId, linkId = i } )
-           -- navigator[i].linkName = event.target.linkName
-           -- navigator[i].linkSrc = "views.scene"..pageId
             storyboard.gotoScene( "views.scene"..pageId, "crossFade", 400  )
             return true
         end
@@ -54,7 +53,7 @@ function loadResources(screenGroup,a,isLastLevel)
 	local vary
 	local i=0
          --print("navigator ::"..navigator)
-        
+        screenGroupHolder = screenGroup
 	if isLastLevel==false then
                 local scrollView = widget.newScrollView {
                 top = 200,
@@ -88,32 +87,31 @@ function loadResources(screenGroup,a,isLastLevel)
 	return vary
 end
 
---[[function createNavigator()
-		 	nav = display.newText(event.target.linkName..">",55+e,0,"Helvetica",40)
-            e = e + nav.width
-            nav.wid = e
-            nav.id = event.target.linkName
-        	nav:addEventListener( "touch", onNavTouch)
-end]]
-
 -- Creates the navigation bar
 function createNavigator()
---local nav = nil
-local group = display.newGroup()
-    --group:removeSelf()
-    if #navigator > 2 then
-        for i=2,#navigator do
-       nav = display.newText(navigator[i].linkName..">",55+e,0,"Helvetica",40)
-         navigator[i].linkObj = nav
-         e = e + nav.width
-        	nav.wid = e
-        	nav.id = i
-        	group:insert(nav)
-         navigator[i].linkObj:addEventListener( "touch", onNavTouch)
+    group.isVisible = true
+    local nav= {}
+    local e = 0
+    if #navigator > 1 then
+        print(" ::: "..#navigator)
+        for i=2,#navigator do  
+            nav = display.newText(navigator[i].linkName.." > ",55+e,0,"Helvetica",40)
+            print("Before ::::::")
+            
+            --print(display.newText(navigator[i].linkName.." > ",55+e,0,"Helvetica",40))
+            navigator[i].linkObj = nav
+            e = e + nav.width
+            nav.wid = e
+            nav.id = i
+            group:insert(nav)
+            screenGroupHolder:insert(group)
+            navigator[i].linkObj:addEventListener( "touch", onNavTouch)
             --print(key .."  =  ".. value)
             -- Create the navigation Bar with the key and value
+            print("Name "..navigator[i].linkName)
+            print(navigator[i].linkObj.text)
         end
-        print("hohohoho"..#navigator)
+        --print("hohohoho"..#navigator)
     end
 end
 
@@ -121,8 +119,10 @@ end
 local function onHomeTouch( event )
 print(event.phase)
 	if event.phase == "began" then
+            pageId = ""
             homeImage.isVisible = false
             storyboard.gotoScene( "views.homeScreen", "slideRight", 500  )
+            group.isVisible = false
             return true
 	end
 end
