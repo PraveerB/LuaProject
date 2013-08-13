@@ -28,7 +28,7 @@ local viewableScreenW, viewableScreenH = display.viewableContentWidth, display.v
 local screenOffsetW, screenOffsetH = display.contentWidth -  display.viewableContentWidth, display.contentHeight - display.viewableContentHeight
 
 local imgNum = nil
-local images = nil
+local images = {}
 local touchListener, nextImage, prevImage, cancelMove, initImage
 local background
 local imageNumberText, imageNumberTextShadow
@@ -42,68 +42,15 @@ function new( imageSet, slideBackground, top, bottom )
 		
 	--[[if slideBackground then
 		background = display.newImage("assets/bg.jpeg", 0, 0, true)
-	else
-		background = display.newRect( 0, 0, screenW, screenH-(top+bottom) )
-		background:setFillColor(0, 0, 0)
-	end]]
+	else]]
+		--background = display.newRect( 0, 0, screenW, screenH-(top+bottom) )
+		--background:setFillColor(0, 0, 0)
+	--end
 	--background = display.newImage("assets/bg.jpg", 0, 0, true)
 	--g:insert(background)
 	
-	images = {}
-	for i = 1,#imageSet do
-		local p = display.newImage(imageSet[i])
-		local h = viewableScreenH-(top+bottom)
-		if p.width > viewableScreenW or p.height > h then
-			if p.width/viewableScreenW > p.height/h then 
-					p.xScale = viewableScreenW/p.width
-					p.yScale = viewableScreenW/p.width
-			else
-					p.xScale = h/p.height
-					p.yScale = h/p.height
-			end		 
-		end
-		g:insert(p)
-	    
-		if (i > 1) then
-			p.x = screenW*1.5 + pad -- all images offscreen except the first one
-		else 
-			p.x = screenW*.5
-		end
-		
-		p.y = h*.5
-
-		images[i] = p
-	end
 	
-	local defaultString = "1 of " .. #images
-
-	--local navBar = display.newGroup()
-	--g:insert(navBar)
-	
-	--local navBarGraphic = display.newImage("assets/navBar.png", 0, 0, false)
-	--navBar:insert(navBarGraphic)
-	--navBarGraphic.x = viewableScreenW*.5
-	--navBarGraphic.y = 0
-			
-	--[[imageNumberText = display.newText(defaultString, 0, 0, native.systemFontBold, 14)
-	imageNumberText:setTextColor(255, 255, 255)
-	imageNumberTextShadow = display.newText(defaultString, 0, 0, native.systemFontBold, 14)
-	imageNumberTextShadow:setTextColor(0, 0, 0)
-	navBar:insert(imageNumberTextShadow)
-	navBar:insert(imageNumberText)
-	imageNumberText.x = navBar.width*.5
-	imageNumberText.y = navBarGraphic.y
-	imageNumberTextShadow.x = imageNumberText.x - 1
-	imageNumberTextShadow.y = imageNumberText.y - 1
-	
-	navBar.y = math.floor(navBar.height*0.5)
-
-	imgNum = 1
-	
-	g.x = 0
-	g.y = top + display.screenOriginY
-	]]		
-	function touchListener (self, touch) 
+        function touchListener (self, touch) 
 		local phase = touch.phase
 		print("slides", phase)
 		if ( phase == "began" ) then
@@ -113,18 +60,18 @@ function new( imageSet, slideBackground, top, bottom )
 
 			startPos = touch.x
 			prevPos = touch.x
-			
-			transition.to( navBar,  { time=200, alpha=math.abs(navBar.alpha-1) } )
+			imgNum = self.imgNum
+			--transition.to( navBar,  { time=200, alpha=math.abs(navBar.alpha-1) } )
 									
         elseif( self.isFocus ) then
         
 			if ( phase == "moved" ) then
 			
-				transition.to(navBar,  { time=400, alpha=0 } )
+				--transition.to(navBar,  { time=400, alpha=0 } )
 						
 				if tween then transition.cancel(tween) end
 	
-				print(imgNum)
+				--print(imgNum)
 				
 				local delta = touch.x - prevPos
 				prevPos = touch.x
@@ -159,6 +106,7 @@ function new( imageSet, slideBackground, top, bottom )
                 -- Allow touch events to be sent normally to the objects they "hit"
                 display.getCurrentStage():setFocus( nil )
                 self.isFocus = false
+                
 														
 			end
 		end
@@ -166,6 +114,62 @@ function new( imageSet, slideBackground, top, bottom )
 		return true
 		
 	end
+        for i = 1,#imageSet do
+		local p = display.newImage(imageSet[i])
+		local h = viewableScreenH-(top+bottom)
+		if p.width > viewableScreenW or p.height > h then
+			if p.width/viewableScreenW > p.height/h then 
+					p.xScale = viewableScreenW/p.width
+					p.yScale = viewableScreenW/p.width
+			else
+					p.xScale = h/p.height
+					p.yScale = h/p.height
+			end		 
+		end
+		g:insert(p)
+	    
+		if (i > 1) then
+			p.x = screenW*1.5 + pad -- all images offscreen except the first one
+		else 
+			p.x = screenW*.5
+		end
+		
+		p.y = h*.5
+                p.imgNum = i
+		images[i] = p
+                p.touch = touchListener
+                p:addEventListener( "touch", p )
+	end
+	
+	--local defaultString = "1 of " .. #images
+
+	--local navBar = display.newGroup()
+	--g:insert(navBar)
+	
+	--local navBarGraphic = display.newImage("assets/navBar.png", 0, 0, false)
+	--navBar:insert(navBarGraphic)
+	--navBarGraphic.x = viewableScreenW*.5
+	--navBarGraphic.y = 0
+			
+	--[[imageNumberText = display.newText(defaultString, 0, 0, native.systemFontBold, 14)
+	imageNumberText:setTextColor(255, 255, 255)
+	imageNumberTextShadow = display.newText(defaultString, 0, 0, native.systemFontBold, 14)
+	imageNumberTextShadow:setTextColor(0, 0, 0)
+	navBar:insert(imageNumberTextShadow)
+	navBar:insert(imageNumberText)
+	imageNumberText.x = navBar.width*.5
+	imageNumberText.y = navBarGraphic.y
+	imageNumberTextShadow.x = imageNumberText.x - 1
+	imageNumberTextShadow.y = imageNumberText.y - 1
+	
+	navBar.y = math.floor(navBar.height*0.5)
+
+	imgNum = 1
+	
+	g.x = 0
+	g.y = top + display.screenOriginY
+	]]		
+	
 	
 	--[[function setSlideNumber()
 		print("setSlideNumber", imgNum .. " of " .. #images)
@@ -207,11 +211,11 @@ function new( imageSet, slideBackground, top, bottom )
 		if (num > 1) then
 			images[num-1].x = (screenW*.5 + pad)*-1
 		end
-		setSlideNumber()
+		--setSlideNumber()
 	end
 
-	--background.touch = touchListener
-	--background:addEventListener( "touch", background )
+	--images.touch = touchListener
+        --images:addEventListener( "touch", images )
 
 	------------------------
 	-- Define public methods

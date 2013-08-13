@@ -5,7 +5,7 @@
 ---------------------------------------------------------------------------------
 
 local storyboard = require( "storyboard" )
-local widget = require( "widget" )
+--local widget = require( "widget" )
 local scene = storyboard.newScene()
 
 ---------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ local vary
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local screenGroup = self.view
-	 scrollView = widget.newScrollView {
+	 --[[scrollView = widget.newScrollView {
                 top = 200,
                 left = 0,
                 width = 1024,
@@ -43,9 +43,9 @@ function scene:createScene( event )
                 verticalScrollDisabled=true,
                 hideScrollBar = false
                 
-            }
+            }]]
 	
-	vary = loadResources(screenGroup,a,true, scrollView)
+	vary = loadResources(screenGroup,a,true)
 	print( "\n1111: createScene event")
 end
 

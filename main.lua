@@ -55,20 +55,20 @@ function loadResources(screenGroup,a,isLastLevel)
          --print("navigator ::"..navigator)
         screenGroupHolder = screenGroup
 	if isLastLevel==false then
-                local scrollView = widget.newScrollView {
-                top = 200,
-                left = 0,
-                width = 1024,
-                height = 250,
-                scrollWidth = 1005,
-                scrollHeight = 0,
-                verticalScrollDisabled=true,
-                hideScrollBar = false
-                
-            }
+--                local scrollView = widget.newScrollView {
+--                top = 200,
+--                left = 0,
+--                width = 1024,
+--                height = 250,
+--                scrollWidth = 1005,
+--                scrollHeight = 0,
+--                verticalScrollDisabled=true,
+--                hideScrollBar = false
+--                
+--            }
             
             for i=1,#a do
-                vary = display.newImage("assets/"..a[i].src, 250*(i-1), 0, native.systemFontBold, 24 )
+                vary = display.newImage("assets/"..a[i].src, 250*(i-1), 200, native.systemFontBold, 24 )
                 vary:setStrokeColor(254,254,254)
                 vary.strokeWidth= 15
                 vary.id = i
@@ -77,7 +77,7 @@ function loadResources(screenGroup,a,isLastLevel)
                 screenGroup:insert(vary)
                 --vary.touch = onSceneTouch
                 vary:addEventListener( "touch", onSceneTouch)
-                scrollView:insert(vary)
+                --scrollView:insert(vary)
             end
 	else 
            local slideView = require("slideView")
