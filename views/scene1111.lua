@@ -5,27 +5,26 @@
 ---------------------------------------------------------------------------------
 
 local storyboard = require( "storyboard" )
+--local widget = require( "widget" )
 local scene = storyboard.newScene()
 
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 local a = { 
-			{ src = "edw.jpg", linkName = "Fiama Di Wills Perfect Young  Repleneshing Multi Benefit Cream" },
-            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Perfect Young Repleneshing Night Skin Infuse" },
-            { src = "edw.jpg", linkName = "Fiama Di Wills Perfect Young Intensive Replenishment Concentrate" },
-            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Perfect Young Mild Cleansing face wash" },			
-            { src = "edw.jpg", linkName = "Fiama Di Wills Men Regenerating Anti Ageing Moisteurizer" },
-            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Men  After shave lotion" },
-            { src = "edw.jpg", linkName = "Fiama Di Wills Men De-stressing and Brightening face wash" },
-            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Men Detoxifying Anti-pollution face wash" },			
-            { src = "edw.jpg", linkName = "Fiama Di Wills Men Moisture Guard  Instant Foaming Face wash" },
-            { src = "vivel-logo-big.jpg", linkName = "Vivel Cell Renew Moisturizer" },
-            { src = "edw.jpg", linkName = "Vivel Cell Renew Pollution Protect face wash" },
-            { src = "vivel-logo-big.jpg", linkName = "Vivel Cell Renew Energizing face wash" },
-            { src = "edw.jpg", linkName = "Vivel Perfect Glow Skin Tone Perfector" }
-
-      }
+			"assets/fiama_di_wills_colour_repair_conditionerpopup.png",
+             "assets/fiama_di_wills_colour_repair_serum.png",
+             "assets/fiama_di_wills_colour_repair_serumpopup.png",
+             "assets/fiama_di_wills_colour_repair_shampoo.png",		
+            "assets/essenzadiwillsInizioaquahommehairandbodyshampoo.png",
+            "assets/essenzadiwillsIniziohommehairandbodyshampoo.png",
+             "assets/edw.jpg",
+            "assets/vivel-logo-big.jpg",			
+            "assets/edw.jpg",
+           "assets/vivel-logo-big.jpg",
+            "assets/edw.jpg",
+            "assets/vivel-logo-big.jpg",
+             "assets/edw.jpg" }
 local vary
 -- print(table.getn(a)) 
 
@@ -34,7 +33,19 @@ local vary
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local screenGroup = self.view
-	vary = loadResources(screenGroup,a,false)
+	 --[[scrollView = widget.newScrollView {
+                top = 200,
+                left = 0,
+                width = 1024,
+                height = 250,
+                scrollWidth = 1005,
+                scrollHeight = 0,
+                verticalScrollDisabled=true,
+                hideScrollBar = false
+                
+            }]]
+	
+	vary = loadResources(screenGroup,a,true)
 	print( "\n1111: createScene event")
 end
 
@@ -46,7 +57,7 @@ function scene:enterScene( event )
 	
 	-- remove previous scene's view
 	local prior_scene = storyboard.getPrevious()
-	storyboard.purgeScene( prior_scene )
+	storyboard.removeScene( prior_scene )
 	
 end
 
