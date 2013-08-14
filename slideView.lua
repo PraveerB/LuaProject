@@ -95,6 +95,9 @@ function new( imageSet, slideBackground, top, bottom )
 					nextImage()
 				elseif (dragDistance > 40 and imgNum > 1) then
 					prevImage()
+                                elseif (dragDistance > -40 and dragDistance < 40) then
+                                        local storyboard = require "storyboard"
+                                        storyboard.gotoScene( "views.homeScreen", "fade", 400 )
 				else
 					cancelMove()
 				end
