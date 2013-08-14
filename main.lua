@@ -17,9 +17,10 @@ local navigator = {
 		{linkName = "tabBar" , linkSrc = "0" , linkId = "0", linkObj=""}
 }
 pageId = "" 
-local screenGroupHolder = {};
+local screenGroupHolder = {}
+local scrollView = {}
 --navSequence =0;
- local group 
+ --local group 
 --local i 
 local function onNavTouch (event)
         print("Link Id :::: "..event.target.id .. " String Size = "..#pageId)
@@ -42,8 +43,7 @@ local function onNavTouch (event)
             end
             i=1
             while(i < 5) do
-                if(navigator[i].linkName  == "") then
-                    
+                if(navigator[i] ~= nil and navigator[i].linkName  == "") then
                     table.remove(navigator, i)
                 end
                 i= i +1
@@ -65,8 +65,7 @@ local function onSceneTouch( event )
         if event.phase == "began" then
             table.insert(navigator, { linkName = event.target.linkName, linkSrc = "views.scene"..pageId, linkId = i } )
             storyboard.gotoScene( "views.scene"..pageId, "crossFade", 400  )
-            
-            
+                       
             return true
         end
         return true
@@ -75,10 +74,12 @@ end
 function loadResources(screenGroup,a,isLastLevel)
 	local vary
 	local i=0
+        
          --print("navigator ::"..navigator)
         screenGroupHolder = screenGroup
 	if isLastLevel==false then
---                local scrollView = widget.newScrollView {
+               
+--                scrollView = widget.newScrollView {
 --                top = 200,
 --                left = 0,
 --                width = 1024,
@@ -102,7 +103,9 @@ function loadResources(screenGroup,a,isLastLevel)
                 vary:addEventListener( "touch", onSceneTouch)
                 --scrollView:insert(vary)
             end
-	else 
+        else 
+--            scrollView = nil
+            --table.remove(scrollView)
            local slideView = require("slideView")
            print("else part")
            slideViewGroup = slideView.new(a)
