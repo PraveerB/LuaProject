@@ -97,6 +97,7 @@ function new( imageSet, slideBackground, top, bottom )
 				print("dragDistance: " .. dragDistance)
 				
 				if (dragDistance < -40 and imgNum < #images) then
+                                     display.getCurrentStage():setFocus(nil)
 					nextImage()
 				elseif (dragDistance > 40 and imgNum > 1) then
 					prevImage()
