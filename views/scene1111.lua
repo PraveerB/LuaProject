@@ -18,13 +18,13 @@ local a = {
              "assets/fiama_di_wills_colour_repair_shampoo.png",		
             "assets/essenzadiwillsInizioaquahommehairandbodyshampoo.png",
             "assets/essenzadiwillsIniziohommehairandbodyshampoo.png",
-             "assets/edw.jpg",
+            "assets/edw.jpg",
             "assets/vivel-logo-big.jpg",			
             "assets/edw.jpg",
-           "assets/vivel-logo-big.jpg",
+            "assets/vivel-logo-big.jpg",
             "assets/edw.jpg",
             "assets/vivel-logo-big.jpg",
-             "assets/edw.jpg" }
+            "assets/edw.jpg" }
 local vary
 -- print(table.getn(a)) 
 
