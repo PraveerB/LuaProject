@@ -10,8 +10,8 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
-local a = { =
-			{ src = "edw.jpg", linkName = "Vivel Cell Renew Moisturizer" },
+local a = { 
+            { src = "edw.jpg", linkName = "Vivel Cell Renew Moisturizer" },
             { src = "vivel-logo-big.jpg", linkName = "Vivel Cell Renew hand cream" },
             { src = "edw.jpg", linkName = "Vivel Cell Renew All Year Light Body Lotion" },
             { src = "vivel-logo-big.jpg", linkName = "Vivel Cell Renew Body Lotion" }

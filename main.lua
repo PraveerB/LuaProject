@@ -19,7 +19,8 @@ local navigator = {
 pageId = "" 
 local screenGroupHolder = {};
 --navSequence =0;
- local group 
+ local group
+ local varyTextTable = {}
 --local i 
 local function onNavTouch (event)
         print("Link Id :::: "..event.target.id .. " String Size = "..#pageId)
@@ -56,6 +57,12 @@ return true
 end
 
 local function onSceneTouch( event )
+--    if #varyTextTable ~= nil then
+--    for i = 1,#varyTextTable do
+--        varyTextTable[i]:removeSelf()
+--        table.remove(varyTextTable,i)
+--    end
+--    end
         group.isVisible = true
 	i = #navigator
 	i=i+1
@@ -64,7 +71,7 @@ local function onSceneTouch( event )
         --print("views.scene"..pageId)
         if event.phase == "began" then
             table.insert(navigator, { linkName = event.target.linkName, linkSrc = "views.scene"..pageId, linkId = i } )
-            storyboard.gotoScene( "views.scene"..pageId, "crossFade", 400  )
+            storyboard.gotoScene( "views.scene"..pageId, "fade", 400  )
             
             
             return true
@@ -73,7 +80,7 @@ local function onSceneTouch( event )
 end
 
 function loadResources(screenGroup,a,isLastLevel)
-	local vary
+	local vary, varyText 
 	local i=0
          --print("navigator ::"..navigator)
         screenGroupHolder = screenGroup
@@ -91,7 +98,7 @@ function loadResources(screenGroup,a,isLastLevel)
 --            }
             
             for i=1,#a do
-                vary = display.newImage("assets/"..a[i].src, 250*(i-1), 200, native.systemFontBold, 24 )
+                vary = display.newImage("assets/"..a[i].src, 250*(i-1), 180,true)
                 vary:setStrokeColor(254,254,254)
                 vary.strokeWidth= 15
                 vary.id = i
@@ -99,6 +106,10 @@ function loadResources(screenGroup,a,isLastLevel)
 		-- set link name print(key).
                 screenGroup:insert(vary)
                 --vary.touch = onSceneTouch
+                varyText = display.newText(vary.linkName,250*(i-1)+30,420, native.systemFontBold, 20 )
+                varyText:setTextColor(0,0,0)
+                varyTextTable[i] = varyText
+                screenGroup:insert(varyText)
                 vary:addEventListener( "touch", onSceneTouch)
                 --scrollView:insert(vary)
             end
