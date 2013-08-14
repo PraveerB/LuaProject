@@ -27,6 +27,7 @@ local screenW, screenH = display.contentWidth, display.contentHeight
 local viewableScreenW, viewableScreenH = display.viewableContentWidth, display.viewableContentHeight
 local screenOffsetW, screenOffsetH = display.contentWidth -  display.viewableContentWidth, display.contentHeight - display.viewableContentHeight
 
+require("native")
 local imgNum = nil
 local images = {}
 local touchListener, nextImage, prevImage, cancelMove, initImage
@@ -101,6 +102,49 @@ function new( imageSet, slideBackground, top, bottom )
 					nextImage()
 				elseif (dragDistance > 40 and imgNum > 1) then
 					prevImage()
+                                elseif (dragDistance > -40 and dragDistance < 40) then
+                                    display.getCurrentStage():setFocus( nil )
+                                    self.isFocus = false
+                                        if((touch.x > 845 and touch.x < 950) and (touch.y > 360 and touch.y < 390)) then
+                                            local widget = require "widget"
+                                            local img
+                                            local text = display.newText("X",500,0,"Helvetica",30)
+                                            text:setTextColor(0,40,90)
+                                                       
+                                            local scrollView = widget.newScrollView {
+                                                        top = 180,
+                                                        left = 470,
+                                                        width = 530,
+                                                        height = 250,
+                                                        scrollWidth = 0,
+                                                        scrollHeight = 200,
+                                                        horizontalScrollDisabled=true,
+                                                        hideScrollBar = false,
+                                                        
+                                                    }
+                                                    img = display.newImage("assets/men-aqua-sport_showergel-_popup.jpg",0,30,true)
+                                                    scrollView:insert(text)
+                                                    scrollView:insert(img)
+                                                    
+                                                    
+                                            function textListener (event )
+                                                display.getCurrentStage():setFocus( self )
+                                                --self.isFocus = false
+                                                scrollView.isVisible = false
+                                                img:removeSelf()
+                                                scrollView = nil
+                                                
+                                                self.touch = touchListener
+                                                self:addEventListener( "touch", self)
+                                                
+                                            end
+                                            text:addEventListener("touch", textListener)
+                                            self.touch = doNothing()
+                                            --self.removeEventListener("touch", touchListener) 
+                                            --Runtime:addEventListener("touch",scrollListener)
+                                           --native.showPopup( "mail" )
+                                            
+                                        end
 				else
 					cancelMove()
 				end
@@ -252,7 +296,9 @@ function new( imageSet, slideBackground, top, bottom )
 	return g	
 end
 
-
+function doNothing()
+    
+end
 
 function multitouch(e)
         if (e.phase == "began") then
@@ -267,6 +313,3 @@ function multitouch(e)
         return true -- unfortunately, this will not propogate down if false is returned
 end
  
-
-
-
