@@ -37,7 +37,7 @@ function scene:enterScene( event )
 	print( "HS: enterScene event" )
 	-- remove previous scene's view
 	local prior_scene = storyboard.getPrevious()
-	storyboard.purgeScene( prior_scene )
+	storyboard.removeAll()
 	
 end
 

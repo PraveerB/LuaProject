@@ -12,38 +12,61 @@ local widget = require "widget"
 --local views = require "views."
 
 -- initialize global empty table
-
-navigator = {
-		{linkName = "tabBar" , linkSrc = "" , linkId = "", linkObj=""}
+local slideViewGroup
+local navigator = {
+		{linkName = "tabBar" , linkSrc = "0" , linkId = "0", linkObj=""}
 }
 pageId = "" 
 local screenGroupHolder = {};
 --navSequence =0;
- local group = display.newGroup()
---local nav,i 
-local function onNavTouch ( event )
-	storyboard.gotoScene( navigator[event.target.id].linkSrc, "crossFade", 400  )
-	if event.target.id < #navigator+1 then
-        print("ID  "..event.target.id .."  Size "..#navigator )
-	for i=event.target.id,#navigator do
-		print(navigator[i+1].linkObj.text)
-		table.remove(navigator,i+1)
-		end
-		
-	end
+ local group 
+--local i 
+local function onNavTouch (event)
+        print("Link Id :::: "..event.target.id .. " String Size = "..#pageId)
+        pageId = string.sub(pageId ,1 , event.target.id-1 )
+        
+        --if #pageId <= event.target.id then 
+            storyboard.gotoScene( navigator[event.target.id].linkSrc, "crossFade", 400  )
+            if event.target.id < #navigator then
+            print("ID  "..event.target.id .."  Size "..#navigator )
+            local tableElementsToRemove = {}
+            for i=event.target.id+1,#navigator do
+                   --print(" :: "..i.. "  "..navigator[i].linkId .. "  "..navigator[i].linkName.."  "..navigator[i].linkSrc)                 
+                    --print(navigator[i+1].linkObj.text)
+                    if slideViewGroup ~= nil then
+                        slideViewGroup:removeSelf()
+                    end
+                    table.insert(tableElementsToRemove , i)
+                    navigator[i] = { linkName = "", linkSrc = "", linkId = "" }
+                    
+            end
+            i=1
+            while(i < 5) do
+                if(navigator[i].linkName  == "") then
+                    
+                    table.remove(navigator, i)
+                end
+                i= i +1
+            end
+            group.isVisible = false
+            createNavigator()
+            end
+       -- end
 return true
 end
 
 local function onSceneTouch( event )
+        group.isVisible = true
 	i = #navigator
 	i=i+1
         pageId = pageId..event.target.id
         homeImage.isVisible = true
         --print("views.scene"..pageId)
         if event.phase == "began" then
-            --navSequence =navSequence +1
             table.insert(navigator, { linkName = event.target.linkName, linkSrc = "views.scene"..pageId, linkId = i } )
             storyboard.gotoScene( "views.scene"..pageId, "crossFade", 400  )
+            
+            
             return true
         end
         return true
@@ -82,38 +105,34 @@ function loadResources(screenGroup,a,isLastLevel)
 	else 
            local slideView = require("slideView")
            print("else part")
-           slideView.new(a)
+           slideViewGroup = slideView.new(a)
 	end
-        createNavigator()
-       
+       createNavigator()
 	return vary
 end
 
 -- Creates the navigation bar
 function createNavigator()
+    print("pageId    :::::::::::::::::::::::::::"..pageId)
+    group = display.newGroup()
     group.isVisible = true
     local nav= {}
     local e = 0
     if #navigator > 1 then
-        print(" ::: "..#navigator)
         for i=2,#navigator do  
-            nav = display.newText(navigator[i].linkName.." > ",55+e,0,"Helvetica",40)
-            print("Before ::::::")
-            
-            --print(display.newText(navigator[i].linkName.." > ",55+e,0,"Helvetica",40))
-            navigator[i].linkObj = nav
-            e = e + nav.width
-            nav.wid = e
-            nav.id = i
-            group:insert(nav)
-            screenGroupHolder:insert(group)
-            navigator[i].linkObj:addEventListener( "touch", onNavTouch)
-            --print(key .."  =  ".. value)
-            -- Create the navigation Bar with the key and value
-            print("Name "..navigator[i].linkName)
-            print(navigator[i].linkObj.text)
+            if( navigator[i].linkName ~= "") then
+                nav = display.newText(navigator[i].linkName.." > ",55+e,0,"Helvetica",35)
+                navigator[i].linkObj = nav
+                e = e + nav.width
+                nav.wid = e
+                nav.id = i
+                if nav ~= nil then
+                    group:insert(nav)
+                end
+                screenGroupHolder:insert(group)
+                navigator[i].linkObj:addEventListener( "touch", onNavTouch)
+            end
         end
-        --print("hohohoho"..#navigator)
     end
 end
 
@@ -121,10 +140,19 @@ end
 local function onHomeTouch( event )
 print(event.phase)
 	if event.phase == "began" then
+            if slideViewGroup ~= nil then
+                slideViewGroup:removeSelf()
+            end
+            group = nil
+            group = display.newGroup()
             pageId = ""
             homeImage.isVisible = false
-            storyboard.gotoScene( "views.homeScreen", "slideRight", 500  )
+            storyboard.gotoScene( "views.homeScreen", "crossFade", 500  )
             group.isVisible = false
+            navigator = nil
+            navigator = {
+                    {linkName = "tabBar" , linkSrc = "" , linkId = "", linkObj=""}
+            }
             return true
 	end
 end
