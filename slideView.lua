@@ -33,6 +33,11 @@ local touchListener, nextImage, prevImage, cancelMove, initImage
 local background
 local imageNumberText, imageNumberTextShadow
 
+system.activate( "multitouch" )
+require("multitouch")
+require("pinchlib")
+
+
 function new( imageSet, slideBackground, top, bottom )	
 	local pad = 20
 	local top = top or 0 
@@ -139,6 +144,7 @@ function new( imageSet, slideBackground, top, bottom )
 		images[i] = p
                 p.touch = touchListener
                 p:addEventListener( "touch", p )
+                p:addEventListener( "multitouch", multitouch )
 	end
 	
 	--local defaultString = "1 of " .. #images
@@ -244,4 +250,22 @@ function new( imageSet, slideBackground, top, bottom )
 
 	return g	
 end
+
+
+
+function multitouch(e)
+        if (e.phase == "began") then
+                doPinchZoom( e.target, {} )
+                doPinchZoom( e.target, e.list )
+        elseif (e.phase == "moved") then
+                doPinchZoom( e.target, e.list )
+        else
+                doPinchZoom( e.target, {} )
+        end
+        
+        return true -- unfortunately, this will not propogate down if false is returned
+end
+ 
+
+
 

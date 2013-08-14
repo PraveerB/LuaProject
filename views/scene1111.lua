@@ -12,19 +12,19 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 local a = { 
-			"assets/fiama_di_wills_colour_repair_conditionerpopup.png",
-             "assets/fiama_di_wills_colour_repair_serum.png",
-             "assets/fiama_di_wills_colour_repair_serumpopup.png",
-             "assets/fiama_di_wills_colour_repair_shampoo.png",		
+            "assets/fiama_di_wills_colour_repair_conditionerpopup.png",
+            "assets/fiama_di_wills_colour_repair_serum.png",
+            "assets/fiama_di_wills_colour_repair_serumpopup.png",
+            "assets/fiama_di_wills_colour_repair_shampoo.png",		
             "assets/essenzadiwillsInizioaquahommehairandbodyshampoo.png",
             "assets/essenzadiwillsIniziohommehairandbodyshampoo.png",
-             "assets/edw.jpg",
+            "assets/edw.jpg",
             "assets/vivel-logo-big.jpg",			
             "assets/edw.jpg",
-           "assets/vivel-logo-big.jpg",
+            "assets/vivel-logo-big.jpg",
             "assets/edw.jpg",
             "assets/vivel-logo-big.jpg",
-             "assets/edw.jpg" }
+            "assets/edw.jpg" }
 local vary
 -- print(table.getn(a)) 
 

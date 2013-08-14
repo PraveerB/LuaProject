@@ -19,31 +19,24 @@ local navigator = {
 pageId = "" 
 local screenGroupHolder = {}
 local scrollView = {}
---navSequence =0;
- --local group 
---local i 
+
 local function onNavTouch (event)
         print("Link Id :::: "..event.target.id .. " String Size = "..#pageId)
         pageId = string.sub(pageId ,1 , event.target.id-1 )
-        
-        --if #pageId <= event.target.id then 
             storyboard.gotoScene( navigator[event.target.id].linkSrc, "crossFade", 400  )
             if event.target.id < #navigator then
             print("ID  "..event.target.id .."  Size "..#navigator )
             local tableElementsToRemove = {}
             for i=event.target.id+1,#navigator do
-                   --print(" :: "..i.. "  "..navigator[i].linkId .. "  "..navigator[i].linkName.."  "..navigator[i].linkSrc)                 
-                    --print(navigator[i+1].linkObj.text)
                     if slideViewGroup ~= nil then
                         slideViewGroup:removeSelf()
                     end
                     table.insert(tableElementsToRemove , i)
                     navigator[i] = { linkName = "", linkSrc = "", linkId = "" }
-                    
             end
-            i=1
+            local i=1
             while(i < 5) do
-                if(navigator[i] ~= nil and navigator[i].linkName  == "") then
+                if(navigator[i] ~= nil and  navigator[i].linkName  == "") then
                     table.remove(navigator, i)
                 end
                 i= i +1
@@ -51,8 +44,7 @@ local function onNavTouch (event)
             group.isVisible = false
             createNavigator()
             end
-       -- end
-return true
+    return true
 end
 
 local function onSceneTouch( event )
@@ -104,19 +96,16 @@ function loadResources(screenGroup,a,isLastLevel)
                 --scrollView:insert(vary)
             end
         else 
---            scrollView = nil
-            --table.remove(scrollView)
            local slideView = require("slideView")
            print("else part")
            slideViewGroup = slideView.new(a)
 	end
-       createNavigator()
-	return vary
+        createNavigator()
+        return vary
 end
 
 -- Creates the navigation bar
 function createNavigator()
-    print("pageId    :::::::::::::::::::::::::::"..pageId)
     group = display.newGroup()
     group.isVisible = true
     local nav= {}
