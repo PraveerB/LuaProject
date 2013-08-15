@@ -34,13 +34,12 @@ system.activate( "multitouch" )
 require("multitouch")
 require("pinchlib")
 
-
 function new( imageSet, slideBackground, top, bottom )	
 	local pad = 20
 	local top = top or 0 
 	local bottom = bottom or 0
 	local g = display.newGroup()
-
+	local defaultString = "1 of " .. #imageSet
 	function touchListener (self, touch) 
 		local phase = touch.phase
 		if ( phase == "began" ) then
@@ -55,7 +54,7 @@ function new( imageSet, slideBackground, top, bottom )
         
 			if ( phase == "moved" ) then
 			
-				--transition.to(navBar,  { time=400, alpha=0 } )
+				transition.to(defaultString,  { time=400, alpha=0 } )
 						
 				if tween then transition.cancel(tween) end
 	
@@ -173,7 +172,7 @@ function new( imageSet, slideBackground, top, bottom )
                 p:addEventListener( "multitouch", multitouch )
 	end
 	
-	local defaultString = "1 of " .. #images
+
 
 	--local navBar = display.newGroup()
 	--g:insert(navBar)
@@ -195,6 +194,7 @@ function new( imageSet, slideBackground, top, bottom )
 	--imageNumberTextShadow.y = imageNumberText.y - 1
 	
 	--navBar.y = math.floor(navBar.height*0.5)
+	g:insert(imageNumberText)
 
 	imgNum = 1
 	
@@ -204,8 +204,8 @@ function new( imageSet, slideBackground, top, bottom )
 	
 	
 	function setSlideNumber()
-		print("setSlideNumber", imgNum .. " of " .. #images)
-		imageNumberText.text = imgNum .. " of " .. #images
+		print("setSlideNumber", imgNum .. " of " .. #imageSet)
+		imageNumberText.text = imgNum .. " of " .. #imageSet
 		--imageNumberTextShadow.text = imgNum .. " of " .. #images
 	end
 	
