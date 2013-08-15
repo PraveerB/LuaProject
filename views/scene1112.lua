@@ -11,9 +11,9 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 local a = { 
-			{ src = "edw.jpg", linkName = "Essenza di Wills Inizio Femme body lotion" },
-            { src = "vivel-logo-big.jpg", linkName = "Vivel Cell Renew All Year Light Body Lotion" },
-            { src = "edw.jpg", linkName = "Vivel Cell Renew Body Lotion" },
+			"assets/fiama_di_wills_colour_repair_conditionerpopup.png",	
+            "assets/essenzadiwillsInizioaquahommehairandbodyshampoo.png",
+            "assets/essenzadiwillsIniziohommehairandbodyshampoo.png"
       }
 
 local vary
@@ -24,7 +24,7 @@ local vary
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local screenGroup = self.view
-	vary = loadResources(screenGroup,a,false)
+	vary = loadResources(screenGroup,a,true)
 	print( "\n1112: createScene event")
 end
 

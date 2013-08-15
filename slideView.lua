@@ -26,14 +26,10 @@ module(..., package.seeall)
 local screenW, screenH = display.contentWidth, display.contentHeight
 local viewableScreenW, viewableScreenH = display.viewableContentWidth, display.viewableContentHeight
 local screenOffsetW, screenOffsetH = display.contentWidth -  display.viewableContentWidth, display.contentHeight - display.viewableContentHeight
-
-require("native")
 local imgNum = nil
 local images = {}
 local touchListener, nextImage, prevImage, cancelMove, initImage
-local background
-local imageNumberText, imageNumberTextShadow
-
+local imageNumberText
 system.activate( "multitouch" )
 require("multitouch")
 require("pinchlib")
@@ -43,33 +39,19 @@ function new( imageSet, slideBackground, top, bottom )
 	local pad = 20
 	local top = top or 0 
 	local bottom = bottom or 0
-
 	local g = display.newGroup()
-		
-	--[[if slideBackground then
-		background = display.newImage("assets/bg.jpeg", 0, 0, true)
-	else]]
-		--background = display.newRect( 0, 0, screenW, screenH-(top+bottom) )
-		--background:setFillColor(0, 0, 0)
-	--end
-	--background = display.newImage("assets/bg.jpg", 0, 0, true)
-	--g:insert(background)
-	
-	
-        function touchListener (self, touch) 
-		local phase = touch.phase
-		print("slides", phase)
-		if ( phase == "began" ) then
-            -- Subsequent touch events will target button even if they are outside the contentBounds of button
-            display.getCurrentStage():setFocus( self )
-            self.isFocus = true
 
-			startPos = touch.x
-			prevPos = touch.x
-			imgNum = self.imgNum
-			--transition.to( navBar,  { time=200, alpha=math.abs(navBar.alpha-1) } )
-									
-        elseif( self.isFocus ) then
+	function touchListener (self, touch) 
+		local phase = touch.phase
+		if ( phase == "began" ) then
+		        --Subsequent touch events will target button even if they are outside the contentBounds of button
+		        display.getCurrentStage():setFocus( self )
+		        self.isFocus = true
+				startPos = touch.x
+				prevPos = touch.x
+				imgNum = self.imgNum
+				
+		elseif( self.isFocus ) then	
         
 			if ( phase == "moved" ) then
 			
@@ -191,7 +173,7 @@ function new( imageSet, slideBackground, top, bottom )
                 p:addEventListener( "multitouch", multitouch )
 	end
 	
-	--local defaultString = "1 of " .. #images
+	local defaultString = "1 of " .. #images
 
 	--local navBar = display.newGroup()
 	--g:insert(navBar)
@@ -201,31 +183,31 @@ function new( imageSet, slideBackground, top, bottom )
 	--navBarGraphic.x = viewableScreenW*.5
 	--navBarGraphic.y = 0
 			
-	--[[imageNumberText = display.newText(defaultString, 0, 0, native.systemFontBold, 14)
+	imageNumberText = display.newText(defaultString,screenW*.4,screenH-60, native.systemFontBold, 45)
 	imageNumberText:setTextColor(255, 255, 255)
-	imageNumberTextShadow = display.newText(defaultString, 0, 0, native.systemFontBold, 14)
-	imageNumberTextShadow:setTextColor(0, 0, 0)
-	navBar:insert(imageNumberTextShadow)
-	navBar:insert(imageNumberText)
-	imageNumberText.x = navBar.width*.5
-	imageNumberText.y = navBarGraphic.y
-	imageNumberTextShadow.x = imageNumberText.x - 1
-	imageNumberTextShadow.y = imageNumberText.y - 1
+	--imageNumberTextShadow = display.newText(defaultString, 0,0, native.systemFontBold, 54)
+	--imageNumberTextShadow:setTextColor(0, 0, 0)
+	--navBar:insert(imageNumberTextShadow)
+	--navBar:insert(imageNumberText)
+	--imageNumberText.x = navBar.width*.5
+	--imageNumberText.y = navBarGraphic.y
+	--imageNumberTextShadow.x = imageNumberText.x - 1
+	--imageNumberTextShadow.y = imageNumberText.y - 1
 	
-	navBar.y = math.floor(navBar.height*0.5)
+	--navBar.y = math.floor(navBar.height*0.5)
 
 	imgNum = 1
 	
 	g.x = 0
 	g.y = top + display.screenOriginY
-	]]		
+			
 	
 	
-	--[[function setSlideNumber()
+	function setSlideNumber()
 		print("setSlideNumber", imgNum .. " of " .. #images)
 		imageNumberText.text = imgNum .. " of " .. #images
-		imageNumberTextShadow.text = imgNum .. " of " .. #images
-	end]]
+		--imageNumberTextShadow.text = imgNum .. " of " .. #images
+	end
 	
 	function cancelTween()
 		if prevTween then 
@@ -261,7 +243,7 @@ function new( imageSet, slideBackground, top, bottom )
 		if (num > 1) then
 			images[num-1].x = (screenW*.5 + pad)*-1
 		end
-		--setSlideNumber()
+		setSlideNumber()
 	end
 
 	--images.touch = touchListener
