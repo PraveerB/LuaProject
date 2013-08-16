@@ -217,10 +217,12 @@ function new( imageSet, slideBackground, top, bottom )
 	end
 	
 	function nextImage()
+		if imgNum < #imageSet then
 		tween = transition.to( images[imgNum], {time=400, x=(screenW*.5 + pad)*-1, transition=easing.outExpo } )
 		tween = transition.to( images[imgNum+1], {time=400, x=screenW*.5, transition=easing.outExpo } )
 		imgNum = imgNum + 1
 		initImage(imgNum)
+		end
 	end
 	
 	function prevImage()
