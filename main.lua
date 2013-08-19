@@ -8,6 +8,7 @@ local image = display.newImage( "assets/bg.jpg", 320*480)
 --require widget and storyboard libraries
 local storyboard = require "storyboard"
 local widget = require "widget"
+local native = require "native"
 
 -- initialize global empty table
 local slideViewGroup
@@ -17,6 +18,21 @@ local screenGroupHolder = {};
 local group
 local varyTextTable = {}
 local scrollView = {}
+
+local function myUnhandledErrorListener( event )
+
+    local iHandledTheError = true
+
+    if iHandledTheError then
+        print( "Handling the unhandled error", event.errorMessage )
+        native.showAlert("error report",""..event.errorMessage)
+        storyboard.reloadScene()
+    else
+        print( "Not handling the unhandled error", event.errorMessage )
+    end
+    
+    return iHandledTheError
+end
 
 local function onNavTouch (event)
     pageId = string.sub(pageId ,1 , event.target.id-1 )
@@ -53,6 +69,8 @@ local function onSceneTouch( event )
     pageId = pageId..event.target.id
     homeImage.isVisible = true
     if event.name == "tap" then
+        
+        
         print ("views.scene"..pageId)
         --[[if event.phase == "began" then
            startPos = scrollView.x
@@ -68,8 +86,16 @@ local function onSceneTouch( event )
             endPos = scrollView.x
             local drag = math.floor(endPos - startPos)
             if (drag > -20 and drag < 20) then]]
-                table.insert(navigator, { linkName = event.target.linkName, linkSrc = "views.scene"..pageId, linkId = i } )
-                storyboard.gotoScene( "views.scene"..pageId, "flip", 50  )
+                
+                if pageId == "2" then
+                    pageId = ""
+                    media.playVideo("Corona-iPhone.m4v",true)
+                elseif pageId == "3" then
+                    system.openURL( "tel:+918884366552" )
+                else
+                    table.insert(navigator, { linkName = event.target.linkName, linkSrc = "views.scene"..pageId, linkId = i } )
+                    storyboard.gotoScene( "views.scene"..pageId, "flip", 50  )
+                end
                 print ("views.scene"..pageId)
                 --return true
             --end
@@ -169,6 +195,7 @@ homeImage.isVisible = false
 --homeImage.touch = onHomeTouch
 --
 homeImage:addEventListener( "touch", onHomeTouch)
+Runtime:addEventListener("unhandledError", myUnhandledErrorListener)
 
 -- load first scene
 storyboard.gotoScene( "views.homeScreen", "fade", 400 )
