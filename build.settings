@@ -1,5 +1,6 @@
 settings =
 {
+        androidPermissions =  {  "android.permission.CALL_PHONE", },
 	orientation =
 	{
 		default = "landscapeRight",

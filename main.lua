@@ -19,14 +19,22 @@ local group
 local varyTextTable = {}
 local scrollView = {}
 
+local function onComplete( event )
+    if "clicked" == event.action then
+        storyboard.gotoScene( "views.homeScreen", "flip", 70 )
+    end
+end
+
+
 local function myUnhandledErrorListener( event )
 
     local iHandledTheError = true
 
     if iHandledTheError then
         print( "Handling the unhandled error", event.errorMessage )
-        native.showAlert("error report",""..event.errorMessage)
-        storyboard.reloadScene()
+        native.showAlert("error report","This page doesn't exist","Reload?",onComplete)
+        storyboard.gotoScene( "views.homeScreen", "flip", 70 )
+        homeImage.isVisible = false
     else
         print( "Not handling the unhandled error", event.errorMessage )
     end
@@ -61,74 +69,75 @@ local function onNavTouch (event)
 end
 
 local function onSceneTouch( event )
-	group.isVisible = true
-	i = #navigator
-	i=i+1
-        local startPos = 0
-        local endPos
+    group.isVisible = true
+    i = #navigator
+    i=i+1
     pageId = pageId..event.target.id
-    homeImage.isVisible = true
     if event.name == "tap" then
-        
-        
         print ("views.scene"..pageId)
-        --[[if event.phase == "began" then
-           startPos = scrollView.x
-           print(startPos)
+        if pageId == "2" then
+            pageId = ""
+            media.playVideo("Corona-iPhone.m4v",true)
+        elseif pageId == "3" then
+            pageId = ""
+            system.openURL( "tel:+918884366552" )
+        elseif pageId == "4" then
+            pageId = ""
+            local options =
+                    {
+                    to = { "1234567890", "9876543210" },
+                    body = "I scored over 9000!!! Can you do better?"
+                    }
+            native.showPopup("sms", options)
+        else
+            table.insert(navigator, { linkName = event.target.linkName, linkSrc = "views.scene"..pageId, linkId = i } )
+            storyboard.gotoScene( "views.scene"..pageId, "flip", 50  )
+            homeImage.isVisible = true
         end
-        if event.phase == "moved" then
-            display.currentStage:setFocus(scrollView)
-            
-            endPos = scrollView.x
-            print(endPos)
-         end
-        if event.phase == "ended" then
-            endPos = scrollView.x
-            local drag = math.floor(endPos - startPos)
-            if (drag > -20 and drag < 20) then]]
-                
-                if pageId == "2" then
-                    pageId = ""
-                    media.playVideo("Corona-iPhone.m4v",true)
-                elseif pageId == "3" then
-                    system.openURL( "tel:+918884366552" )
-                else
-                    table.insert(navigator, { linkName = event.target.linkName, linkSrc = "views.scene"..pageId, linkId = i } )
-                    storyboard.gotoScene( "views.scene"..pageId, "flip", 50  )
-                end
-                print ("views.scene"..pageId)
-                --return true
-            --end
-        --end
-        end
+        print ("views.scene"..pageId)
+    end
     return true
 end
 
 function loadResources(screenGroup,a,isLastLevel)
-	local vary, varyText 
+	local xLeft, vary, varyText 
 	local i=0
+        if #a < 4 then
+            xLeft = ((display.contentWidth)-(#a*307))/2
+        else
+            xLeft = 0
+        end
     screenGroupHolder = screenGroup
 	if isLastLevel==false then
 	    scrollView = widget.newScrollView {
 	    top = 200,
-	    left = 0,
-	    width = 1024,
-	    height = 250,
+	    left = xLeft,
+	    width = display.contentWidth,
+	    height = 0,
 	    scrollWidth = 1005,
 	    scrollHeight = 0,
 	    verticalScrollDisabled=true,
-	    hideScrollBar = false
+	    hideScrollBar = false,
 	    --listener = onSceneTouch
 	    }
-            
         for i=1,#a do
-            vary = display.newImage("assets/"..a[i].src, 250*(i-1),0,true)
-            vary:setStrokeColor(254,254,254)
-            vary.strokeWidth= 15
+            vary = display.newImage("assets/"..a[i].src,295*(i-1)+(i*15),0,true)
+            --vary.y = 0
+            
+--                print("a is >= 4")
+--                vary.x = 295*(i-1)
+--                 print(vary.x)
+--            --end
+            --vary:setStrokeColor(254,254,254)
+            --vary.strokeWidth= 15
             vary.id = i
             vary.linkName = a[i].linkName
             screenGroup:insert(vary)
-            varyText = display.newText(vary.linkName,250*(i-1)+30,220, native.systemFontBold, 20 )
+            varyText = display.newText(vary.linkName,307*(i-1)+ 100,240, native.systemFontBold, 20 )
+            print(varyText.width)
+--            if varyText.width > 200 then
+--                varyText = varyText.."\n"..string.sub(varyText, 24)
+--            end
             varyText:setTextColor(0,0,0)
             varyTextTable[i] = varyText
             vary:addEventListener( "tap", onSceneTouch)
