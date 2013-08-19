@@ -35,6 +35,23 @@ require("multitouch")
 require("pinchlib")
 require("native")
 
+function multitouch(e)
+        if (e.phase == "began") then
+            native.showAlert( "Corona", "began", { "OK", "Learn More" }, onComplete )
+                doPinchZoom( e.target, {} )
+                doPinchZoom( e.target, e.list )
+        elseif (e.phase == "moved") then
+                native.showAlert( "Corona", "moved", { "OK", "Learn More" }, onComplete )
+                doPinchZoom( e.target, e.list )
+        else
+            native.showAlert( "Corona", "ended", { "OK", "Learn More" }, onComplete )
+                doPinchZoom( e.target, {} )
+        end
+        
+        return true -- unfortunately, this will not propogate down if false is returned
+end
+ 
+
 function new( imageSet, slideBackground, top, bottom )	
 	local pad = 20
 	local top = top or 0 
@@ -261,13 +278,13 @@ function new( imageSet, slideBackground, top, bottom )
 		print("jumpToImage")
 		print("#images", #images)
 		for i = 1, #images do
-			if i < num then
-				images[i].x = -screenW*.5;
-			elseif i > num then
-				images[i].x = screenW*1.5 + pad
-			else
-				images[i].x = screenW*.5 - pad
-			end
+                    if i < num then
+                            images[i].x = -screenW*.5;
+                    elseif i > num then
+                            images[i].x = screenW*1.5 + pad
+                    else
+                            images[i].x = screenW*.5 - pad
+                    end
 		end
 		imgNum = num
 		initImage(imgNum)
@@ -285,19 +302,4 @@ function doNothing()
     
 end
 
-function multitouch(e)
-        if (e.phase == "began") then
-            native.showAlert( "Corona", "began", { "OK", "Learn More" }, onComplete )
-                doPinchZoom( e.target, {} )
-                doPinchZoom( e.target, e.list )
-        elseif (e.phase == "moved") then
-                native.showAlert( "Corona", "moved", { "OK", "Learn More" }, onComplete )
-                doPinchZoom( e.target, e.list )
-        else
-            native.showAlert( "Corona", "ended", { "OK", "Learn More" }, onComplete )
-                doPinchZoom( e.target, {} )
-        end
-        
-        return true -- unfortunately, this will not propogate down if false is returned
-end
- 
+
