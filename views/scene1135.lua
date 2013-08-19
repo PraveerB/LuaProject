@@ -11,7 +11,7 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 local a = { 
-			{ src = "edw.jpg", linkName = "Vivel Perfect Glow Skin Tone Perfector" }
+            "assets/essenzadiwillsIniziohommehairandbodyshampoo.png"
       }
 local vary
 -- print(table.getn(a)) 
@@ -21,7 +21,7 @@ local vary
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local screenGroup = self.view
-	vary = loadResources(screenGroup,a,false)
+	vary = loadResources(screenGroup,a,true)
 	print( "\nHS: createScene event")
 end
 

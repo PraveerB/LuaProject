@@ -11,12 +11,12 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 local a = { 
-			{ src = "edw.jpg", linkName = "Fiama Di Wills Perfect Young  Repleneshing Multi Benefit Cream" },
-            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Perfect Young Repleneshing Night Skin Infuse" },
-            { src = "edw.jpg", linkName = "Fiama Di Wills Perfect Young Intensive Replenishment Concentrate" },
-            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Perfect Young Replinishing Eye Serum" },
-            { src = "edw.jpg", linkName = "Fiama Di Wills Men Regenerating Anti Ageing Moisteurizer" },
-            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Men  Revitalizing Anti-Fatigue Under Eye Gel" }
+			"assets/fiama_di_wills_colour_repair_conditionerpopup.png",
+             "assets/fiama_di_wills_colour_repair_serum.png",
+             "assets/fiama_di_wills_colour_repair_serumpopup.png",
+             "assets/fiama_di_wills_colour_repair_shampoo.png",		
+            "assets/essenzadiwillsInizioaquahommehairandbodyshampoo.png",
+            "assets/essenzadiwillsIniziohommehairandbodyshampoo.png"
       }
 local vary
 -- print(table.getn(a)) 
@@ -26,7 +26,7 @@ local vary
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local screenGroup = self.view
-	vary = loadResources(screenGroup,a,false)
+	vary = loadResources(screenGroup,a,true)
 	print( "\n1121: createScene event")
 end
 
