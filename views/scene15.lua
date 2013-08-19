@@ -11,9 +11,9 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 local a = { 
-			{ src = "edw.jpg", linkName = "Fiama Di Wills Perfect Young product Avs" },
-            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Perfect Young expert articles" },
-            { src = "edw.jpg", linkName = "Bath CareVivel Cell Renew" },
+			{ src = "edw.jpg", linkName = "Fiama Di Wills Perfect\nYoung product Avs" },
+            { src = "vivel-logo-big.jpg", linkName = "Fiama Di Wills Perfect\nYoung expert articles" },
+            { src = "edw.jpg", linkName = "Bath CareVivel Cell\nRenew" },
             { src = "vivel-logo-big.jpg", linkName = "Vivel Perfect Glow" }
       }
 local vary
