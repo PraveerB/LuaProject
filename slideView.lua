@@ -33,6 +33,7 @@ local imageNumberText
 system.activate( "multitouch" )
 require("multitouch")
 require("pinchlib")
+require("native")
 
 function new( imageSet, slideBackground, top, bottom )	
 	local pad = 20
@@ -219,11 +220,11 @@ function new( imageSet, slideBackground, top, bottom )
 	
 	function nextImage()
 		if imgNum < #imageSet then
-		tween = transition.to( images[imgNum], {time=400, x=(screenW*.5 + pad)*-1, transition=easing.outExpo } )
-		tween = transition.to( images[imgNum+1], {time=400, x=screenW*.5, transition=easing.outExpo } )
-		imgNum = imgNum + 1
-		initImage(imgNum)
-		end
+                    tween = transition.to( images[imgNum], {time=400, x=(screenW*.5 + pad)*-1, transition=easing.outExpo } )
+                    tween = transition.to( images[imgNum+1], {time=400, x=screenW*.5, transition=easing.outExpo } )
+                    imgNum = imgNum + 1
+                    initImage(imgNum)
+                end
 	end
 	
 	function prevImage()
@@ -286,11 +287,14 @@ end
 
 function multitouch(e)
         if (e.phase == "began") then
+            native.showAlert( "Corona", "began", { "OK", "Learn More" }, onComplete )
                 doPinchZoom( e.target, {} )
                 doPinchZoom( e.target, e.list )
         elseif (e.phase == "moved") then
+                native.showAlert( "Corona", "moved", { "OK", "Learn More" }, onComplete )
                 doPinchZoom( e.target, e.list )
         else
+            native.showAlert( "Corona", "ended", { "OK", "Learn More" }, onComplete )
                 doPinchZoom( e.target, {} )
         end
         
