@@ -18,12 +18,15 @@ local a = { { src = "edw.jpg", linkName = "Skin Care" },
             
       }
 local vary
+local i = 1
 -- print(table.getn(a)) 
 
 -- Touch event listener for background image
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
+    i = i+1
+    print(i)
 local screenGroup = self.view
 	local widget = require( "widget" )
 	local screenGroup = self.view
@@ -36,7 +39,10 @@ end
 function scene:enterScene( event )
 	print( "HS: enterScene event" )
 	-- remove previous scene's view
-	local prior_scene = storyboard.getPrevious()
+--	local prior_scene = storyboard.getPrevious()
+--        if prior_scene ~= nil then
+--            storyboard.removeScene(prior_scene)
+--        end
 	storyboard.removeAll()
 	
 end

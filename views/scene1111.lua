@@ -56,8 +56,8 @@ function scene:enterScene( event )
 	print( "1111: enterScene event" )
 	
 	-- remove previous scene's view
-	local prior_scene = storyboard.getPrevious()
-	storyboard.removeScene( prior_scene )
+	--local prior_scene = storyboard.getPrevious()
+	storyboard.removeAll()
 	
 end
 
@@ -66,7 +66,7 @@ end
 function scene:exitScene( event )
 	print( "1111: exitScene event" )
 	--vary:removeEventListener( "touch", vary)
-	
+        slideView.removeListeners()
 end
 
 -- Called prior to the removal of scene's "view" (display group)
