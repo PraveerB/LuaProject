@@ -3,7 +3,7 @@ display.setStatusBar( display.HiddenStatusBar )
 
 
 -- set background image for all scenes
-local image = display.newImage( "assets/bg.jpg", 320*480)
+local image = display.newImage( "assets/bgLand.jpg", display.contentHeight*display.contentWidth)
 --
 
 --require widget and storyboard libraries
@@ -19,6 +19,9 @@ local screenGroupHolder = {};
 local group
 local varyTextTable = {}
 local scrollView = {}
+
+portraitMode = true
+local screenGroup,a,isLastLevel
 
 local function onComplete( event )
     if "clicked" == event.action then
@@ -98,8 +101,21 @@ local function onSceneTouch( event )
     return true
 end
 
-function loadResources(screenGroup,a,isLastLevel)
 
+function onOrientationChange(event)
+    portraitMode = true
+    scrollView = nil
+    scrollView = {}
+    group = nil
+    group = display.newGroup()
+    loadResources(screenGroup,a,isLastLevel)
+end
+
+
+function loadResources(screenGroup,a,isLastLevel)
+        screenGroup= screenGroup 
+        a = a 
+        isLastLevel = isLastLevel
 	local xLeft, vary, varyText 
 	local i=0
         if #a < 4 then
@@ -109,27 +125,41 @@ function loadResources(screenGroup,a,isLastLevel)
         end
     screenGroupHolder = screenGroup
 	if isLastLevel==false then
-	    scrollView = widget.newScrollView {
-	    top = 200,
-	    left = xLeft,
-	    width = display.contentWidth,
-	    height = 0,
-	    scrollWidth = 1005,
-	    scrollHeight = 0,
-	    verticalScrollDisabled=true,
-	    hideScrollBar = false,
-	    --listener = onSceneTouch
-	    }
+            if portraitMode then
+                scrollView = widget.newScrollView {
+                    top = 200,
+                    left = xLeft,
+                    width = 0,   
+                    height = display.contentHeight,
+                    scrollWidth = 0,
+                    scrollHeight = 1005,
+                    --verticalScrollDisabled=true,
+                    hideScrollBar = false,
+                    --listener = onSceneTouch
+                }
+            else
+                scrollView = widget.newScrollView {
+                    top = 200,
+                    left = xLeft,
+                    width = display.contentWidth,   
+                    height = 0,
+                    scrollWidth = 1005,
+                    scrollHeight = 0,
+                    --verticalScrollDisabled=true,
+                    hideScrollBar = false,
+                    --listener = onSceneTouch
+                }
+            end  
+        local yCordinate = 0
         for i=1,#a do
-            vary = display.newImage("assets/"..a[i].src,295*(i-1)+(i*15),0,true)
-            --vary.y = 0
-            
---                print("a is >= 4")
---                vary.x = 295*(i-1)
---                 print(vary.x)
---            --end
-            --vary:setStrokeColor(254,254,254)
-            --vary.strokeWidth= 15
+            if portraitMode then  
+                vary = display.newImage("assets/"..a[i].src, 295*(((i%2)+1)%2)+(((i%2)+1)%2)*15, yCordinate  ,true)
+                if i % 2 == 0 then
+                    yCordinate = yCordinate + 220 + (((i%2)+1)%2)*70 
+                end
+            else
+              vary = display.newImage("assets/"..a[i].src,295*(i-1)+(i*15), yCordinate ,true)  
+            end           
             vary.id = i
             vary.linkName = a[i].linkName
             screenGroup:insert(vary)
@@ -206,3 +236,5 @@ Runtime:addEventListener("unhandledError", myUnhandledErrorListener)
 
 -- load first scene
 storyboard.gotoScene( "views.homeScreen", "fade", 400 )
+
+Runtime:addEventListener( "orientation", onOrientationChange ) 
