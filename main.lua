@@ -3,7 +3,7 @@ display.setStatusBar( display.HiddenStatusBar )
 
 
 -- set background image for all scenes
-local image = display.newImage( "assets/bgLand.jpg", display.contentHeight*display.contentWidth)
+local image = display.newImage( "assets/bgPort.jpg", display.contentHeight*display.contentWidth)
 --
 
 --require widget and storyboard libraries
@@ -21,7 +21,7 @@ local varyTextTable = {}
 local scrollView = {}
 
 portraitMode = true
-local screenGroup,a,isLastLevel
+local aHolder,isLastLevelHolder , storyboardHolder
 
 local function onComplete( event )
     if group ~= nil then
@@ -48,7 +48,7 @@ local function myUnhandledErrorListener( event )
     local iHandledTheError = true
     if iHandledTheError then
         print( "Handling the unhandled error", event.errorMessage )
-        native.showAlert("error report","This page doesn't exist",{"Reload?","Exit App"},onComplete)
+        native.showAlert("error report",event.errorMessage,{"Reload?","Exit App"},onComplete)
     else
         print( "Not handling the unhandled error", event.errorMessage )
     end
@@ -114,20 +114,35 @@ local function onSceneTouch( event )
 end
 
 
-function onOrientationChange(event)
-    portraitMode = true
-    scrollView = nil
-    scrollView = {}
+function onOrientationChange()
+    if portraitMode then
+        --image.setFilePath("assets/bgPort.jpg")
+        --image = display.newImage( "assets/bgPort.jpg", display.contentHeight*display.contentWidth)
+        portraitMode = false
+    else
+        --image.setFilePath("assets/bgLand.jpg")
+        --image = display.newImage( "assets/bgLand.jpg", display.contentHeight*display.contentWidth)
+        portraitMode = true
+    end
+    if slideViewGroup ~= nil then
+        slideViewGroup:removeSelf()
+    end
+    
+    
+    
     group = nil
     group = display.newGroup()
-    loadResources(screenGroup,a,isLastLevel)
+    print("scrollView   ::: "..#screenGroupHolder)
+    loadResources(screenGroupHolder,aHolder,isLastLevelHolder)
 end
 
 
 function loadResources(screenGroup,a,isLastLevel)
-        screenGroup= screenGroup 
-        a = a 
-        isLastLevel = isLastLevel
+    if a~=nil then
+        storyboardHolder = storyboard
+        screenGroupHolder= screenGroup 
+        aHolder = a 
+        isLastLevelHolder = isLastLevel
 	local xLeft, vary, varyText 
 	local i=0
         if #a < 4 then
@@ -135,7 +150,7 @@ function loadResources(screenGroup,a,isLastLevel)
         else
             xLeft = 0
         end
-    screenGroupHolder = screenGroup
+    
 	if isLastLevel==false then
             if portraitMode then
                 scrollView = widget.newScrollView {
@@ -192,8 +207,10 @@ function loadResources(screenGroup,a,isLastLevel)
        local slideView = require("slideView")
        slideViewGroup = slideView.new(a)
     end	
+    screenGroupHolder = screenGroup
     createNavigator()
     return vary
+end
 end
 
 function createNavigator()

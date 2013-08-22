@@ -10,23 +10,23 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
-local a = { 
-			{ src = "edw.jpg", linkName = "Products" },
-            { src = "vivel-logo-big.jpg", linkName = "Consultation" },
-            { src = "edw.jpg", linkName = "Communication" },
-            { src = "vivel-logo-big.jpg", linkName = "Product Literature" },
-            { src = "vivel-logo-big.jpg", linkName = "Expert Speak" }
 
-           }
-local vary
 -- print(table.getn(a)) 
 
 -- Touch event listener for background image
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
-	local screenGroup = self.view
-	vary = loadResources(screenGroup,a,false)
+    local a = { 
+            { src = "edw.jpg", linkName = "Products" },
+            { src = "vivel-logo-big.jpg", linkName = "Consultation" },
+            { src = "edw.jpg", linkName = "Communication" },
+            { src = "vivel-logo-big.jpg", linkName = "Product Literature" },
+            { src = "vivel-logo-big.jpg", linkName = "Expert Speak" }
+
+           }
+    local screenGroup = self.view
+    loadResources(screenGroup,a,false)
 	--print( "\n1: createScene event")
 end
 
@@ -47,7 +47,6 @@ end
 function scene:exitScene( event )
 	
 	print( "1: exitScene event" )
-		--vary:removeEventListener( "touch", vary)
 	
 end
 

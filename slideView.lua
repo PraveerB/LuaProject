@@ -127,7 +127,6 @@ function new( imageSet, slideBackground, top, bottom )
                                                     scrollView:insert(text)
                                                     scrollView:insert(img)
                                                     
-                                                    
                                             function textListener (event )
                                                 display.getCurrentStage():setFocus( self )
                                                 --self.isFocus = false

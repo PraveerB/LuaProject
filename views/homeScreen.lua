@@ -30,7 +30,7 @@ function scene:createScene( event )
 local screenGroup = self.view
 	local widget = require( "widget" )
 	local screenGroup = self.view
-	vary = loadResources(screenGroup,a,false,widget)
+	vary = loadResources(screenGroup,a,false)
 	print( "\nHS: createScene event")
 end
 
