@@ -122,12 +122,12 @@ local function newTouchPoint(e)
 end
 
 local function handleTouch(e)
-	if (e.phase == "began") then
-		local circle = newTouchPoint(e)
-		circle.target:dispatchEvent{ name="multitouch", phase="began", target=circle.target, list=touches:get(circle.target) }
-	end
-	print('handleTouch(e)',e.target)
-	return true
+--	if (e.phase == "began") then
+--		local circle = newTouchPoint(e)
+--		circle.target:dispatchEvent{ name="multitouch", phase="began", target=circle.target, list=touches:get(circle.target) }
+--	end
+--	print('handleTouch(e)',e.target)
+--	return true
 end
 
 

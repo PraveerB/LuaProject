@@ -24,7 +24,21 @@ portraitMode = true
 local screenGroup,a,isLastLevel
 
 local function onComplete( event )
+    if group ~= nil then
+        group.isVisible = false
+    end
+    pageId = ""
+    homeImage.isVisible = false
+    navigator = nil
+    navigator = {{linkName = "tabBar" , linkSrc = "" , linkId = "", linkObj=""} }
     if "clicked" == event.action then
+        local i = event.index
+        if i == 1 then
+            storyboard.gotoScene( "views.homeScreen", "flip", 70 )
+        elseif i==2 then
+            os.exit()
+        end
+    else
         storyboard.gotoScene( "views.homeScreen", "flip", 70 )
     end
 end
@@ -34,9 +48,7 @@ local function myUnhandledErrorListener( event )
     local iHandledTheError = true
     if iHandledTheError then
         print( "Handling the unhandled error", event.errorMessage )
-        native.showAlert("error report","This page doesn't exist","Reload?",onComplete)
-        storyboard.gotoScene( "views.homeScreen", "flip", 70 )
-        homeImage.isVisible = false
+        native.showAlert("error report","This page doesn't exist",{"Reload?","Exit App"},onComplete)
     else
         print( "Not handling the unhandled error", event.errorMessage )
     end
@@ -71,7 +83,7 @@ local function onNavTouch (event)
 end
 
 local function onSceneTouch( event )
-    group.isVisible = true
+    --group.isVisible = true
     i = #navigator
     i=i+1
     pageId = pageId..event.target.id
@@ -79,7 +91,7 @@ local function onSceneTouch( event )
         print ("views.scene"..pageId)
         if pageId == "2" then
             pageId = ""
-            media.playVideo("Corona-iPhone.m4v",true)
+            media.playVideo("Corona-iPhone.m4v",true,onComplete)
         elseif pageId == "3" then
             pageId = ""
             system.openURL( "tel:+918884366552" )
@@ -87,7 +99,7 @@ local function onSceneTouch( event )
             pageId = ""
             local options =
                     {
-                    to = { "1234567890", "9876543210" },
+                    to = { "08884366552", "08006206769" },
                     body = "I scored over 9000!!! Can you do better?"
                     }
             native.showPopup("sms", options)
@@ -217,10 +229,10 @@ local function onHomeTouch( event )
         group = display.newGroup()
         pageId = ""
         homeImage.isVisible = false
-        storyboard.gotoScene( "views.homeScreen", "crossFade", 500  )
         group.isVisible = false
         navigator = nil
         navigator = {{linkName = "tabBar" , linkSrc = "" , linkId = "", linkObj=""} }
+        storyboard.gotoScene( "views.homeScreen", "crossFade", 500  )
         return true
     end
 end
@@ -233,7 +245,12 @@ homeImage.isVisible = false
 --
 homeImage:addEventListener( "touch", onHomeTouch)
 Runtime:addEventListener("unhandledError", myUnhandledErrorListener)
-
+local function checkMemory()
+   collectgarbage( "collect" )
+   local memUsage_str = string.format( "MEMORY = %.3f KB", collectgarbage( "count" ) )
+   print( memUsage_str, "TEXTURE = "..(system.getInfo("textureMemoryUsed") / (1024 * 1024) ) )
+end
+timer.performWithDelay( 5000, checkMemory, 0 )
 -- load first scene
 storyboard.gotoScene( "views.homeScreen", "fade", 400 )
 

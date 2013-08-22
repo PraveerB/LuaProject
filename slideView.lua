@@ -22,7 +22,7 @@
 -- DEALINGS IN THE SOFTWARE.
 
 module(..., package.seeall)
-
+--system.activate( "multitouch" )
 local screenW, screenH = display.contentWidth, display.contentHeight
 local viewableScreenW, viewableScreenH = display.viewableContentWidth, display.viewableContentHeight
 local screenOffsetW, screenOffsetH = display.contentWidth -  display.viewableContentWidth, display.contentHeight - display.viewableContentHeight
@@ -30,22 +30,24 @@ local imgNum = nil
 local images = {}
 local touchListener, nextImage, prevImage, cancelMove, initImage
 local imageNumberText
-system.activate( "multitouch" )
 require("multitouch")
 require("pinchlib")
 require("native")
 
 function multitouch(e)
         if (e.phase == "began") then
-            native.showAlert( "Corona", "began", { "OK", "Learn More" }, onComplete )
+            
                 doPinchZoom( e.target, {} )
                 doPinchZoom( e.target, e.list )
+                
         elseif (e.phase == "moved") then
-                native.showAlert( "Corona", "moved", { "OK", "Learn More" }, onComplete )
+                
                 doPinchZoom( e.target, e.list )
+                native.showAlert( "Corona", "moved", { "OK", "Learn More" })
         else
-            native.showAlert( "Corona", "ended", { "OK", "Learn More" }, onComplete )
+            
                 doPinchZoom( e.target, {} )
+                native.showAlert( "Corona", "ended", { "OK", "Learn More" })
         end
         
         return true -- unfortunately, this will not propogate down if false is returned
@@ -185,10 +187,11 @@ function new( imageSet, slideBackground, top, bottom )
 		
 		p.y = h*.5
                 p.imgNum = i
-		images[i] = p
+		
                 p.touch = touchListener
                 p:addEventListener( "touch", p )
                 p:addEventListener( "multitouch", multitouch )
+                images[i] = p
 	end
 	
 
@@ -300,6 +303,16 @@ end
 
 function doNothing()
     
+end
+
+function removeListeners()
+    local i= 1
+    print(i)
+    while (images[i] ~= nil) do
+        Runtime:removeEventListener("touch",handleTouch)
+        
+        i= i + 1
+    end
 end
 
 
