@@ -4,8 +4,9 @@ display.setStatusBar( display.HiddenStatusBar )
 
 -- set background image for all scenes
 local image = display.newImage( "assets/bgPort.jpg", display.contentHeight*display.contentWidth)
+local image2 = display.newImage( "assets/bgLand.jpg", display.contentHeight*display.contentWidth)
 --
-
+image2.isVisible = false
 --require widget and storyboard libraries
 local storyboard = require "storyboard"
 local widget = require "widget"
@@ -116,23 +117,25 @@ end
 
 function onOrientationChange()
     if portraitMode then
-        --image.setFilePath("assets/bgPort.jpg")
-        --image = display.newImage( "assets/bgPort.jpg", display.contentHeight*display.contentWidth)
+        print("portrait mode")
+        image2.isVisible = true
+        image.isVisible = false
+        --image.parent = display.newImage( "assets/bgPort.jpg", display.contentHeight*display.contentWidth)
         portraitMode = false
     else
+        print("landscape mode")
+        image.isVisible = true
+        image2.isVisible = false
         --image.setFilePath("assets/bgLand.jpg")
-        --image = display.newImage( "assets/bgLand.jpg", display.contentHeight*display.contentWidth)
+        --image.parent = display.newImage( "assets/bgLand.jpg", display.contentHeight*display.contentWidth)
         portraitMode = true
     end
-    if slideViewGroup ~= nil then
-        slideViewGroup:removeSelf()
+    if screenGroupHolder ~= nil then
+        scrollView:removeSelf()
+        --screenGroupHolder = nil
     end
-    
-    
-    
     group = nil
-    group = display.newGroup()
-    print("scrollView   ::: "..#screenGroupHolder)
+    print("scrollView   ::: ")
     loadResources(screenGroupHolder,aHolder,isLastLevelHolder)
 end
 
@@ -154,13 +157,13 @@ function loadResources(screenGroup,a,isLastLevel)
 	if isLastLevel==false then
             if portraitMode then
                 scrollView = widget.newScrollView {
-                    top = 200,
-                    left = xLeft,
+                    top = 0,
+                    left = display.contentWidth/2 - 110,
                     width = 0,   
                     height = display.contentHeight,
                     scrollWidth = 0,
                     scrollHeight = 1005,
-                    --verticalScrollDisabled=true,
+                    horizontalScrollDisabled=true,
                     hideScrollBar = false,
                     --listener = onSceneTouch
                 }
@@ -172,7 +175,7 @@ function loadResources(screenGroup,a,isLastLevel)
                     height = 0,
                     scrollWidth = 1005,
                     scrollHeight = 0,
-                    --verticalScrollDisabled=true,
+                    verticalScrollDisabled=true,
                     hideScrollBar = false,
                     --listener = onSceneTouch
                 }
@@ -180,17 +183,16 @@ function loadResources(screenGroup,a,isLastLevel)
         local yCordinate = 0
         for i=1,#a do
             if portraitMode then  
-                vary = display.newImage("assets/"..a[i].src, 295*(((i%2)+1)%2)+(((i%2)+1)%2)*15, yCordinate  ,true)
-                if i % 2 == 0 then
-                    yCordinate = yCordinate + 220 + (((i%2)+1)%2)*70 
-                end
+                vary = display.newImage("assets/"..a[i].src, 0, 220*(i-1)+(i*70)  ,true)
+                varyText = display.newText(a[i].linkName,30,220*(i-1)+(i*60), native.systemFontBold, 40 )
             else
               vary = display.newImage("assets/"..a[i].src,295*(i-1)+(i*15), yCordinate ,true)  
+              varyText = display.newText(a[i].linkName,307*(i-1)+ 100,240, native.systemFontBold, 20 )
             end           
             vary.id = i
             vary.linkName = a[i].linkName
             screenGroup:insert(vary)
-            varyText = display.newText(vary.linkName,307*(i-1)+ 100,240, native.systemFontBold, 20 )
+            
             print(varyText.width)
 --            if varyText.width > 200 then
 --                varyText = varyText.."\n"..string.sub(varyText, 24)
